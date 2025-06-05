@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="./tailwind.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OsyRix - Services</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- NAVBAR JS CDN -->
+  <script src="Navbar.js"></script>
+  <!-- AOS Animation Library -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            lightbg: '#0d1b2a',
+            darkbg: '#FEFFEA',
+            darkgreen: {
+              500: '#1B5E20',
+              600: '#0D4D14'
+            },
+            primary: {
+              light: '#3b82f6',
+              dark: '#2563eb'
+            },
+            secondary: {
+              light: '#10b981',
+              dark: '#059669'
+            }
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'float-reverse': 'float-reverse 5s ease-in-out infinite',
+            'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'spin-slow': 'spin 8s linear infinite',
+            'bounce-slow': 'bounce 3s infinite'
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-20px)' }
+            },
+            'float-reverse': {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(20px)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    canvas {
+      display: block;
+    }
+
+    .glass-heading {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .dark .glass-heading {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    @media (hover: none) {
+      .glass-heading {
+        background: rgba(255, 255, 255, 0.7);
+      }
+      .dark .glass-heading {
+        background: rgba(0, 0, 0, 0.7);
+      }
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .service-card {
+      transition: all 0.5s ease;
+      overflow: hidden;
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .service-card:hover .service-icon {
+      transform: scale(1.2) rotate(10deg);
+    }
+
+    .service-icon {
+      transition: all 0.5s ease;
+    }
+
+    .gradient-text {
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .glassmorphism {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    }
+
+    .dark .glassmorphism {
+      background: rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .service-detail {
+      transition: all 0.3s ease;
+      height: 0;
+      opacity: 0;
+      overflow: hidden;
+    }
+
+    .service-card:hover .service-detail {
+      height: auto;
+      opacity: 1;
+      margin-top: 1rem;
+    }
+    
+    .tech-blob {
+      position: absolute;
+      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+      animation: blob-animation 10s ease-in-out infinite alternate;
+    }
+    
+    @keyframes blob-animation {
+      0% {
+        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+      }
+      25% {
+        border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%;
+      }
+      50% {
+        border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%;
+      }
+      75% {
+        border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%;
+      }
+      100% {
+        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+      }
+    }
+
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body class="bg-lightbg dark:bg-darkbg custom-cursor h-full m-0 p-0">
+
+ <!-- Navbar -->
+  <nav class="bg-white border-gray-200 dark:bg-[#0F0606] dark:border-gray-700 rounded-3xl">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <img src="./assets/logo.png" class="h-8" alt="Main Logo" />
+        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">OsyRix</span>
+      </a>
+      <button data-collapse-toggle="navbar-multi-level" type="button" class="custom-cursor inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-multi-level" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+        </svg>
+      </button>
+      <div class="hidden w-full md:block md:w-auto " id="navbar-multi-level">
+        <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-[#0F0606] md:dark:bg-[#0F0606] dark:border-gray-700">
+          <li>
+            <a href="./homepage.html" class="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-[#0F0606]" aria-current="page">Home</a>
+          </li>
+          <li>
+            <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="custom-cursor flex items-center justify-between w-full py-2 px-3 text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:hover:bg-gray-700 md:dark:hover:bg-transparent ">More <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+            </svg></button>
+            <!-- Dropdown menu -->
+            <div id="dropdownNavbar" class="custom-cursor z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600 ">
+              <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownLargeButton">
+                <li>
+                  <a href="./projects.html" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Projects</a>
+                </li>
+                <li aria-labelledby="dropdownNavbarLink">
+                  <button id="doubleDropdownButton" data-dropdown-toggle="doubleDropdown" data-dropdown-placement="right-start" type="button" class="custom-cursor flex items-center justify-between w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Company<svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                  </svg></button>
+                  <div id="doubleDropdown" class="custom-cursor z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700">
+                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="doubleDropdownButton">
+                      <li>
+                        <a href="./technologies.html" class="custom-cursor block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Technologies</a>
+                      </li>
+                      <li>
+                        <a href="./billing.html" class="custom-cursor block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Billing</a>
+                      </li>
+                      <li>
+                        <a href="./team.html" class="custom-cursor block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Our Team</a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+              <div class="py-1">
+                <a href="./about-us.html" class="custom-cursor block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">About Us</a>
+              </div>
+            </div>
+          </li>
+          <li>
+            <a href="./services.html" class="custom-cursor block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Services</a>
+          </li>
+          <li>
+            <a href="./pricing.html" class="custom-cursor block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Pricing</a>
+          </li>
+          <li>
+            <a href="./contact.html" class="custom-cursor block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</a>
+          </li>
+          <li>
+            <a href="https://github.com/kartavyaantani" class="custom-cursor ml-4 bg-primary-light dark:bg-primary-dark text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-all duration-300">Get Started</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<!-- Dark Mode Toggle Button -->
+<div class="fixed top-20 right-5 z-50">
+  <button id="theme-toggle" type="button" class="custom-cursor text-gray-400 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2 glassmorphism">
+    <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+    </svg>
+    <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+    </svg>
+  </button>
+</div>
+
+<!-- Hero Section with 3D Effect -->
+<section id="services-hero" class="relative py-16 md:py-32 overflow-hidden">
+  <div class="absolute inset-0 z-0">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-lightbg dark:to-darkbg opacity-90"></div>
+    <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 dark:opacity-5"></div>
+  </div>
+  
+  <div class="container mx-auto px-4 relative z-10">
+    <div class="flex flex-col items-center justify-center text-center">
+      <div data-aos="fade-up" data-aos-duration="1000">
+        <h1 class="text-4xl md:text-6xl font-bold text-white dark:text-gray-900 mb-6 leading-tight">
+          Our <span class="gradient-text bg-gradient-to-r from-primary-light to-secondary-light dark:from-primary-dark dark:to-secondary-dark">Premium</span> Services
+        </h1>
+        <p class="text-xl text-gray-300 dark:text-gray-700 mb-8 max-w-2xl mx-auto">
+          Discover how our innovative SaaS solutions can revolutionize your business operations and drive sustainable growth.
+        </p>
+      </div>
+      
+      <div class="relative w-full max-w-4xl mx-auto mt-8" data-aos="zoom-in" data-aos-duration="1200">
+        <div class="tech-blob w-64 h-64 bg-primary-light/30 dark:bg-primary-dark/30 -top-10 -left-10 filter blur-xl"></div>
+        <div class="tech-blob w-64 h-64 bg-secondary-light/30 dark:bg-secondary-dark/30 -bottom-10 -right-10 filter blur-xl" style="animation-delay: 2s;"></div>
+        <div class="tech-blob w-48 h-48 bg-yellow-500/30 top-10 right-10 filter blur-xl" style="animation-delay: 4s;"></div>
+        
+        <div class="glassmorphism rounded-2xl p-8 md:p-12 relative overflow-hidden">
+          <div class="absolute inset-0 particles" id="particles"></div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+              <div class="w-20 h-20 bg-primary-light dark:bg-primary-dark rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-rocket text-white text-2xl animate-bounce-slow"></i>
+              </div>
+              <h3 class="text-xl font-bold text-white dark:text-gray-900">Cutting-Edge Technology</h3>
+            </div>
+            <div class="text-center" data-aos="fade-up" data-aos-delay="400">
+              <div class="w-20 h-20 bg-secondary-light dark:bg-secondary-dark rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-cogs text-white text-2xl animate-spin-slow"></i>
+              </div>
+              <h3 class="text-xl font-bold text-white dark:text-gray-900">Customized Solutions</h3>
+            </div>
+            <div class="text-center" data-aos="fade-up" data-aos-delay="600">
+              <div class="w-20 h-20 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-headset text-white text-2xl"></i>
+              </div>
+              <h3 class="text-xl font-bold text-white dark:text-gray-900">Premium Support</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Showcase -->
+<section id="services-showcase" class="py-16 bg-[#0F172A] dark:bg-[#F5F5F5]">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16" data-aos="fade-up">
+      <h2 class="text-3xl md:text-5xl font-bold text-white dark:text-gray-900 mb-4">Enterprise SaaS Solutions</h2>
+      <p class="text-xl text-gray-300 dark:text-gray-600 max-w-3xl mx-auto">
+        Tailored to meet the unique challenges and requirements of modern businesses.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Service 1: Custom CRM Module -->
+      <div class="service-card bg-[#1E293B] dark:bg-white rounded-xl shadow-lg p-8 relative overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+        <div class="absolute inset-0 bg-gradient-to-br from-primary-light/10 to-secondary-light/10 dark:from-primary-dark/10 dark:to-secondary-dark/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="service-icon w-16 h-16 bg-primary-light dark:bg-primary-dark text-white rounded-lg flex items-center justify-center mb-6">
+          <i class="fas fa-users text-2xl"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-white dark:text-gray-900 mb-3">Custom CRM Module</h3>
+        <p class="text-gray-300 dark:text-gray-600">
+          A tailor-made customer relationship management system designed specifically for your business needs.
+        </p>
+        <div class="service-detail">
+          <div class="border-t border-gray-600 dark:border-gray-300 my-4 pt-4">
+            <ul class="space-y-2 text-gray-300 dark:text-gray-600">
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span>360° customer view</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span>AI-powered lead scoring</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span>Custom sales pipelines</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span>Integration with existing tools</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 2: Company Wide Cost Tracker -->
+      <div class="service-card bg-[#1E293B] dark:bg-white rounded-xl shadow-lg p-8 relative overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 dark:from-purple-500/10 dark:to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="service-icon w-16 h-16 bg-purple-500 text-white rounded-lg flex items-center justify-center mb-6">
+          <i class="fas fa-chart-pie text-2xl"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-white dark:text-gray-900 mb-3">Cost Tracker System</h3>
+        <p class="text-gray-300 dark:text-gray-600">
+          Comprehensive solution to monitor, analyze, and optimize your company's expenditures across all departments.
+        </p>
+        <div class="service-detail">
+          <div class="border-t border-gray-600 dark:border-gray-300 my-4 pt-4">
+            <ul class="space-y-2 text-gray-300 dark:text-gray-600">
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span>Real-time expense tracking</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span>Budget forecasting</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span>Automated approval workflows</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span>Advanced reporting & analytics</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 3: Data Analytics Platform -->
+      <div class="service-card bg-[#1E293B] dark:bg-white rounded-xl shadow-lg p-8 relative overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+        <div class="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-amber-500/10 dark:from-yellow-500/10 dark:to-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="service-icon w-16 h-16 bg-yellow-500 text-white rounded-lg flex items-center justify-center mb-6">
+          <i class="fas fa-chart-line text-2xl"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-white dark:text-gray-900 mb-3">Data Analytics Platform</h3>
+        <p class="text-gray-300 dark:text-gray-600">
+          Transform raw data into actionable insights with our powerful analytics solution.
+        </p>
+        <div class="service-detail">
+          <div class="border-t border-gray-600 dark:border-gray-300 my-4 pt-4">
+            <ul class="space-y-2 text-gray-300 dark:text-gray-600">
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span>Predictive analytics</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span>Interactive dashboards</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span>Machine learning integration</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span>Data visualization tools</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 4: Project Management System -->
+      <div class="service-card bg-[#1E293B] dark:bg-white rounded-xl shadow-lg p-8 relative overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 dark:from-blue-500/10 dark:to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="service-icon w-16 h-16 bg-blue-500 text-white rounded-lg flex items-center justify-center mb-6">
+          <i class="fas fa-tasks text-2xl"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-white dark:text-gray-900 mb-3">Project Management</h3>
+        <p class="text-gray-300 dark:text-gray-600">
+          Streamline project workflows, enhance team collaboration, and deliver results on time and within budget.
+        </p>
+        <div class="service-detail">
+          <div class="border-t border-gray-600 dark:border-gray-300 my-4 pt-4">
+            <ul class="space-y-2 text-gray-300 dark:text-gray-600">
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span>Visual Kanban boards</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span>Resource allocation</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span>Time tracking & milestones</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span>Team collaboration tools</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 5: AI Automation Suite -->
+      <div class="service-card bg-[#1E293B] dark:bg-white rounded-xl shadow-lg p-8 relative overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+        <div class="absolute inset-0 bg-gradient-to-br from-green-500/10 to-emerald-500/10 dark:from-green-500/10 dark:to-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="service-icon w-16 h-16 bg-green-500 text-white rounded-lg flex items-center justify-center mb-6">
+          <i class="fas fa-robot text-2xl"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-white dark:text-gray-900 mb-3">AI Automation Suite</h3>
+        <p class="text-gray-300 dark:text-gray-600">
+          Leverage artificial intelligence to automate repetitive tasks and focus on high-value activities.
+        </p>
+        <div class="service-detail">
+          <div class="border-t border-gray-600 dark:border-gray-300 my-4 pt-4">
+            <ul class="space-y-2 text-gray-300 dark:text-gray-600">
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span>Smart document processing</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span>Workflow automation</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span>Chatbot integration</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span>Predictive maintenance</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 6: HR and Talent Management -->
+      <div class="service-card bg-[#1E293B] dark:bg-white rounded-xl shadow-lg p-8 relative overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+        <div class="absolute inset-0 bg-gradient-to-br from-pink-500/10 to-red-500/10 dark:from-pink-500/10 dark:to-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="service-icon w-16 h-16 bg-pink-500 text-white rounded-lg flex items-center justify-center mb-6">
+          <i class="fas fa-user-tie text-2xl"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-white dark:text-gray-900 mb-3">HR Management</h3>
+        <p class="text-gray-300 dark:text-gray-600">
+          Comprehensive HR solution to attract, develop, and retain top talent while streamlining administrative processes.
+        </p>
+        <div class="service-detail">
+          <div class="border-t border-gray-600 dark:border-gray-300 my-4 pt-4">
+            <ul class="space-y-2 text-gray-300 dark:text-gray-600">
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span>Recruitment & onboarding</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span>Performance management</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span>Learning & development</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span>Employee engagement tools</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Technology Stack Section -->
+<section id="tech-stack" class="py-16 bg-gradient-to-b from-[#1B263B] to-[#0F172A] dark:from-[#2D2D2D] dark:to-[#1A1A1A]">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16" data-aos="fade-up">
+      <h2 class="text-3xl md:text-5xl font-bold text-white dark:text-white mb-4">Cutting-Edge Technologies</h2>
+      <p class="text-xl text-gray-300 dark:text-gray-300 max-w-3xl mx-auto">
+        Our solutions are built on the latest technology stacks to ensure optimal performance, security, and scalability.
+      </p>
+    </div>
+
+    <div class="glassmorphism rounded-2xl p-8 md:p-12 max-w-4xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="tech-item text-center">
+          <div class="w-16 h-16 bg-white/10 dark:bg-black/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fab fa-react text-blue-400 text-3xl animate-spin-slow"></i>
+          </div>
+          <h4 class="text-white dark:text-white font-semibold">React.js</h4>
+        </div>
+        
+        <div class="tech-item text-center">
+          <div class="w-16 h-16 bg-white/10 dark:bg-black/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fab fa-node text-green-400 text-3xl"></i>
+          </div>
+          <h4 class="text-white dark:text-white font-semibold">Node.js</h4>
+        </div>
+        
+        <div class="tech-item text-center">
+          <div class="w-16 h-16 bg-white/10 dark:bg-black/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fab fa-python text-yellow-400 text-3xl"></i>
+          </div>
+          <h4 class="text-white dark:text-white font-semibold">Python</h4>
+        </div>
+        
+        <div class="tech-item text-center">
+          <div class="w-16 h-16 bg-white/10 dark:bg-black/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-database text-purple-400 text-3xl"></i>
+          </div>
+          <h4 class="text-white dark:text-white font-semibold">MongoDB</h4>
+        </div>
+        
+        <div class="tech-item text-center">
+          <div class="w-16 h-16 bg-white/10 dark:bg-black/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fab fa-aws text-orange-400 text-3xl"></i>
+          </div>
+          <h4 class="text-white dark:text-white font-semibold">AWS</h4>
+        </div>
+        
+        <div class="tech-item text-center">
+          <div class="w-16 h-16 bg-white/10 dark:bg-black/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fab fa-docker text-blue-500 text-3xl"></i>
+          </div>
+          <h4 class="text-white dark:text-white font-semibold">Docker</h4>
+        </div>
+        
+        <div class="tech-item text-center">
+          <div class="w-16 h-16 bg-white/10 dark:bg-black/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-brain text-pink-400 text-3xl"></i>
+          </div>
+          <h4 class="text-white dark:text-white font-semibold">TensorFlow</h4>
+        </div>
+        
+        <div class="tech-item text-center">
+          <div class="w-16 h-16 bg-white/10 dark:bg-black/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-lock text-red-400 text-3xl"></i>
+          </div>
+          <h4 class="text-white dark:text-white font-semibold">Cybersecurity</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Implementation Process -->
+<section id="implementation" class="py-16 bg-[#0F172A] dark:bg-[#F5F5F5]">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16" data-aos="fade-up">
+      <h2 class="text-3xl md:text-5xl font-bold text-white dark:text-gray-900 mb-4">Our Implementation Process</h2>
+      <p class="text-xl text-gray-300 dark:text-gray-600 max-w-3xl mx-auto">
+        From consultation to deployment, we ensure a smooth transition with minimal disruption.
+      </p>
+    </div>
+
+    <div class="max-w-5xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <!-- Step 1 -->
+        <div class="relative">
+          <div class="bg-[#1E293B] dark:bg-white rounded-xl p-6 h-full flex flex-col items-center text-center transition-all duration-300 hover:transform hover:scale-105">
+            <div class="w-16 h-16 bg-primary-light dark:bg-primary-dark text-white rounded-full flex items-center justify-center mb-4">
+              <span class="text-2xl font-bold">1</span>
+            </div>
+            <h3 class="text-xl font-bold text-white dark:text-gray-900 mb-2">Consultation</h3>
+            <p class="text-gray-300 dark:text-gray-600">Understanding your unique business needs and challenges.</p>
+          </div>
+          <div class="hidden md:block absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-1/2 z-10">
+            <i class="fas fa-chevron-right text-primary-light dark:text-primary-dark text-2xl"></i>
+          </div>
+        </div>
+        
+        <!-- Step 2 -->
+        <div class="relative">
+          <div class="bg-[#1E293B] dark:bg-white rounded-xl p-6 h-full flex flex-col items-center text-center transition-all duration-300 hover:transform hover:scale-105">
+            <div class="w-16 h-16 bg-primary-light dark:bg-primary-dark text-white rounded-full flex items-center justify-center mb-4">
+              <span class="text-2xl font-bold">2</span>
+            </div>
+            <h3 class="text-xl font-bold text-white dark:text-gray-900 mb-2">Solution Design</h3>
+            <p class="text-gray-300 dark:text-gray-600">Crafting a tailored solution that aligns with your goals.</p>
+          </div>
+          <div class="hidden md:block absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-1/2 z-10">
+            <i class="fas fa-chevron-right text-primary-light dark:text-primary-dark text-2xl"></i>
+          </div>
+        </div>
+        
+        <!-- Step 3 -->
+        <div class="relative">
+          <div class="bg-[#1E293B] dark:bg-white rounded-xl p-6 h-full flex flex-col items-center text-center transition-all duration-300 hover:transform hover:scale-105">
+            <div class="w-16 h-16 bg-primary-light dark:bg-primary-dark text-white rounded-full flex items-center justify-center mb-4">
+              <span class="text-2xl font-bold">3</span>
+            </div>
+            <h3 class="text-xl font-bold text-white dark:text-gray-900 mb-2">Implementation</h3>
+            <p class="text-gray-300 dark:text-gray-600">Seamless deployment with minimal disruption to operations.</p>
+          </div>
+          <div class="hidden md:block absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-1/2 z-10">
+            <i class="fas fa-chevron-right text-primary-light dark:text-primary-dark text-2xl"></i>
+          </div>
+        </div>
+        
+        <!-- Step 4 -->
+        <div>
+          <div class="bg-[#1E293B] dark:bg-white rounded-xl p-6 h-full flex flex-col items-center text-center transition-all duration-300 hover:transform hover:scale-105">
+            <div class="w-16 h-16 bg-primary-light dark:bg-primary-dark text-white rounded-full flex items-center justify-center mb-4">
+              <span class="text-2xl font-bold">4</span>
+            </div>
+            <h3 class="text-xl font-bold text-white dark:text-gray-900 mb-2">Ongoing Support</h3>
+            <p class="text-gray-300 dark:text-gray-600">Continuous optimization and dedicated support for your evolving needs.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-16 bg-gradient-to-r from-primary-light to-secondary-light dark:from-primary-dark dark:to-secondary-dark" data-aos="fade-up">
+  <div class="container mx-auto px-4 text-center">
+    <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">Ready to Elevate Your Business?</h2>
+    <p class="text-xl text-white/90 mb-8 max-w-3xl mx-auto">
+      Schedule a consultation with our solutions experts and discover how our services can transform your operations.
+    </p>
+    <div class="flex flex-col sm:flex-row justify-center gap-4">
+      <a href="#" class="bg-white hover:bg-white/90 text-primary-light dark:text-primary-dark font-semibold py-3 px-8 rounded-lg transition-all duration-300">
+        Book a Demo
+      </a>
+      <a href="#" class="bg-transparent hover:bg-white/10 border-2 border-white text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300">
+        View Pricing
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-[#0F172A] dark:bg-[#1A1A1A] py-12">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+      <div>
+        <a href="#" class="flex items-center mb-6">
+          <img src="./assets/logo.png" class="h-8 mr-3" alt="Footer Logo">
+          <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">OsyRix</span>
+        </a>
+        <p class="text-gray-400 mb-4">
+          Empowering businesses with cutting-edge SaaS solutions since 2015.
+        </p>
+        <div class="flex space-x-4">
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+            <i class="fab fa-twitter text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+            <i class="fab fa-linkedin text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+            <i class="fab fa-facebook text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+            <i class="fab fa-instagram text-xl"></i>
+          </a>
+        </div>
+      </div>
+      
+      <div>
+        <h3 class="text-white font-semibold text-lg mb-4">Solutions</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Business Automation</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Data Analytics</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">AI Integration</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Cloud Solutions</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Custom Development</a></li>
+        </ul>
+      </div>
+      
+      <div>
+        <h3 class="text-white font-semibold text-lg mb-4">Company</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">About Us</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Careers</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Blog</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Press</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Partners</a></li>
+        </ul>
+      </div>
+      
+      <div>
+        <h3 class="text-white font-semibold text-lg mb-4">Resources</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Documentation</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Guides</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">API Reference</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Community</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Support</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="border-t border-gray-700 pt-8 mt-8 text-center">
+      <p class="text-gray-400">© 2025 OsyRix. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- AOS Animation Library -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+<!-- Particles JS -->
+<script>
+  // Initialize AOS animations
+  document.addEventListener('DOMContentLoaded', () => {
+    AOS.init({
+      duration: 800,
+      once: false,
+      mirror: true
+    });
+    
+    // Create particles
+    createParticles();
+    
+    // Dark/Light mode toggle functionality
+    initThemeToggle();
+  });
+
+  // Create floating particles
+  function createParticles() {
+    const particlesContainer = document.getElementById('particles');
+    if (!particlesContainer) return;
+    
+    const numberOfParticles = 20;
+    
+    for (let i = 0; i < numberOfParticles; i++) {
+      const particle = document.createElement('div');
+      const size = Math.random() * 5 + 2;
+      
+      particle.style.position = 'absolute';
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.borderRadius = '50%';
+      particle.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.top = `${Math.random() * 100}%`;
+      
+      // Animation properties
+      const duration = Math.random() * 10 + 10;
+      const delay = Math.random() * 5;
+      
+      particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+      particle.style.opacity = Math.random() * 0.7 + 0.3;
+      
+      particlesContainer.appendChild(particle);
+    }
+  }
+
+  // Handle dark/light mode toggle
+  function initThemeToggle() {
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+    // Change the icons inside the button based on previous settings
+    if (localStorage.getItem('color-theme') === 'dark' || 
+        (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      themeToggleLightIcon.classList.remove('hidden');
+      document.documentElement.classList.add('dark');
+    } else {
+      themeToggleDarkIcon.classList.remove('hidden');
+      document.documentElement.classList.remove('dark');
+    }
+
+    themeToggleBtn.addEventListener('click', function() {
+      // Toggle icons
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+
+      // If set via local storage previously
+      if (localStorage.getItem('color-theme')) {
+        if (localStorage.getItem('color-theme') === 'light') {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('color-theme', 'dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('color-theme', 'light');
+        }
+      } else {
+        // If NOT set via local storage previously
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('color-theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('color-theme', 'dark');
+        }
+      }
+    });
+  }
+</script>
+
+</body>
+</html>

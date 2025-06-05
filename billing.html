@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="./tailwind.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OsyRix - Billing</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- NAVBAR JS CDN -->
+  <script src="Navbar.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            lightbg: '#0d1b2a',
+            darkbg: '#FEFFEA',
+            darkgreen: {
+              500: '#1B5E20',
+              600: '#0D4D14'
+            },
+            primary: {
+              light: '#3b82f6',
+              dark: '#2563eb'
+            },
+            secondary: {
+              light: '#10b981',
+              dark: '#059669'
+            }
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'float-reverse': 'float-reverse 5s ease-in-out infinite',
+            'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'bounce-slow': 'bounce 3s infinite',
+            'spin-slow': 'spin 8s linear infinite'
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-20px)' }
+            },
+            'float-reverse': {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(20px)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    canvas {
+      display: block;
+    }
+
+    .glass-heading {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .dark .glass-heading {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    @media (hover: none) {
+      .glass-heading {
+        background: rgba(255, 255, 255, 0.7);
+      }
+      .dark .glass-heading {
+        background: rgba(0, 0, 0, 0.7);
+      }
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .billing-card:hover .billing-icon {
+      transform: scale(1.1);
+      transition: transform 0.5s ease;
+    }
+
+    .billing-card {
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .billing-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .dark .billing-card:hover {
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .pricing-card {
+      transition: all 0.3s ease;
+    }
+
+    .pricing-card:hover {
+      transform: scale(1.03);
+    }
+
+    .gradient-text {
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .gradient-bg {
+      background-size: 200% 200%;
+      animation: gradient 15s ease infinite;
+    }
+
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    
+    .rotate-hover:hover {
+      transform: rotateY(180deg);
+      transition: transform 0.6s ease;
+    }
+    
+    /* Gooey blob animation */
+    .blob {
+      border-radius: 50%;
+      filter: blur(40px);
+      opacity: 0.7;
+      transition: all 0.3s ease;
+    }
+    
+    @keyframes moveBlob {
+      0%, 100% { transform: translate(0, 0); }
+      25% { transform: translate(5px, -5px); }
+      50% { transform: translate(0, 10px); }
+      75% { transform: translate(-5px, -5px); }
+    }
+    
+    .blob-1 {
+      animation: moveBlob 7s infinite;
+    }
+    
+    .blob-2 {
+      animation: moveBlob 9s infinite reverse;
+    }
+    
+    .blob-3 {
+      animation: moveBlob 8s infinite;
+    }
+  </style>
+</head>
+<body class="bg-lightbg dark:bg-darkbg custom-cursor h-full m-0 p-0">
+
+ <!-- Navbar -->
+  <nav class="bg-white border-gray-200 dark:bg-[#0F0606] dark:border-gray-700 rounded-3xl">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <img src="./assets/logo.png" class="h-8" alt="Main Logo" />
+        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">OsyRix</span>
+      </a>
+      <button data-collapse-toggle="navbar-multi-level" type="button" class="custom-cursor inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-multi-level" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+        </svg>
+      </button>
+      <div class="hidden w-full md:block md:w-auto " id="navbar-multi-level">
+        <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-[#0F0606] md:dark:bg-[#0F0606] dark:border-gray-700">
+          <li>
+            <a href="./homepage.html" class="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-[#0F0606]" aria-current="page">Home</a>
+          </li>
+          <li>
+            <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="custom-cursor flex items-center justify-between w-full py-2 px-3 text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:hover:bg-gray-700 md:dark:hover:bg-transparent ">More <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+            </svg></button>
+            <!-- Dropdown menu -->
+            <div id="dropdownNavbar" class="custom-cursor z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600 ">
+              <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownLargeButton">
+                <li>
+                  <a href="./projects.html" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Projects</a>
+                </li>
+                <li aria-labelledby="dropdownNavbarLink">
+                  <button id="doubleDropdownButton" data-dropdown-toggle="doubleDropdown" data-dropdown-placement="right-start" type="button" class="custom-cursor flex items-center justify-between w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Company<svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                  </svg></button>
+                  <div id="doubleDropdown" class="custom-cursor z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700">
+                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="doubleDropdownButton">
+                      <li>
+                        <a href="./technologies.html" class="custom-cursor block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Technologies</a>
+                      </li>
+                      <li>
+                        <a href="./billing.html" class="custom-cursor block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Billing</a>
+                      </li>
+                      <li>
+                        <a href="./team.html" class="custom-cursor block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Our Team</a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+              <div class="py-1">
+                <a href="./about-us.html" class="custom-cursor block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">About Us</a>
+              </div>
+            </div>
+          </li>
+          <li>
+            <a href="./services.html" class="custom-cursor block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Services</a>
+          </li>
+          <li>
+            <a href="./pricing.html" class="custom-cursor block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Pricing</a>
+          </li>
+          <li>
+            <a href="./contact.html" class="custom-cursor block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</a>
+          </li>
+          <li>
+            <a href="https://github.com/kartavyaantani" class="custom-cursor ml-4 bg-primary-light dark:bg-primary-dark text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-all duration-300">Get Started</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+<!-- Hero Section with Billing Theme -->
+<section id="billing-hero" class="relative overflow-hidden pt-20 pb-16">
+  <div class="absolute inset-0 z-0">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-lightbg dark:to-darkbg opacity-90"></div>
+    <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 dark:opacity-5"></div>
+    
+    <!-- Animated blobs -->
+    <div class="blob blob-1 absolute top-20 left-20 w-64 h-64 bg-blue-500 dark:bg-blue-600"></div>
+    <div class="blob blob-2 absolute bottom-40 right-20 w-80 h-80 bg-green-500 dark:bg-green-600"></div>
+    <div class="blob blob-3 absolute top-60 right-40 w-40 h-40 bg-purple-500 dark:bg-purple-600"></div>
+  </div>
+  
+  <div class="container mx-auto px-4 relative z-0">
+    <div class="flex flex-col items-center text-center">
+      <h1 class="text-4xl md:text-6xl font-bold text-white dark:text-gray-900 mb-6 leading-tight">
+        <span class="gradient-text bg-gradient-to-r from-primary-light to-secondary-light dark:from-primary-dark dark:to-secondary-dark">Transparent</span> Billing For Your Business
+      </h1>
+      <p class="text-xl text-gray-300 dark:text-gray-700 mb-8 max-w-2xl">
+        At OsyRix, we believe in complete transparency. No hidden fees, no surprise charges, just fair pricing tailored to your business needs.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a href="#billing-models" class="bg-primary-light dark:bg-primary-dark hover:bg-opacity-90 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 text-center">
+          View Billing Models
+        </a>
+        <a href="#calculator" class="bg-white/10 dark:bg-black/10 hover:bg-white/20 dark:hover:bg-black/20 border border-white/20 dark:border-black/20 text-white dark:text-gray-900 font-semibold py-3 px-8 rounded-lg transition-all duration-300 text-center">
+          Use Calculator
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Light/Dark Mode Toggle Button -->
+<div class="fixed top-24 right-6 z-50">
+  <button id="theme-toggle" class="bg-gray-800 dark:bg-gray-100 text-white dark:text-gray-800 rounded-full p-3 shadow-lg hover:scale-110 transition-transform duration-300">
+    <svg id="dark-icon" class="w-6 h-6 hidden dark:block" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+    </svg>
+    <svg id="light-icon" class="w-6 h-6 block dark:hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+    </svg>
+  </button>
+</div>
+
+<!-- How We Bill Section -->
+<section id="billing-models" class="py-16 bg-gradient-to-r from-[#1B263B] to-[#415A77] dark:from-[#EBF2FA] dark:to-[#C9D6DF]">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-5xl font-bold text-white dark:text-gray-900 mb-4">How We Bill</h2>
+      <p class="text-xl text-gray-300 dark:text-gray-600 max-w-3xl mx-auto">
+        Choose the billing structure that best fits your organization's needs and budget.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Billing Card 1 - Usage Based -->
+      <div class="billing-card bg-[#1E293B] dark:bg-white p-8 rounded-xl shadow-lg relative overflow-hidden group">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="billing-icon w-16 h-16 bg-blue-500 text-white rounded-lg flex items-center justify-center mb-6 transition-all duration-500 relative z-10">
+          <i class="fas fa-chart-line text-2xl"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-white dark:text-gray-900 mb-3 relative z-10">Usage-Based Billing</h3>
+        <p class="text-gray-300 dark:text-gray-600 mb-5 relative z-10">
+          Only pay for what you use. Perfect for businesses with variable needs or seasonal demands.
+        </p>
+        <h4 class="text-lg font-semibold text-white dark:text-gray-900 mb-2 relative z-10">How it works:</h4>
+        <ul class="space-y-2 mb-6 relative z-10">
+          <li class="flex items-start text-gray-300 dark:text-gray-600">
+            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+            <span>Track usage across various metrics (API calls, storage, users)</span>
+          </li>
+          <li class="flex items-start text-gray-300 dark:text-gray-600">
+            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+            <span>Tiered pricing with volume discounts</span>
+          </li>
+          <li class="flex items-start text-gray-300 dark:text-gray-600">
+            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+            <span>Real-time usage dashboard with alerts</span>
+          </li>
+        </ul>
+        <div class="relative z-10">
+          <a href="#calculator" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-300">
+            Calculate Cost
+          </a>
+        </div>
+      </div>
+
+      <!-- Billing Card 2 - Subscription -->
+      <div class="billing-card bg-[#1E293B] dark:bg-white p-8 rounded-xl shadow-lg relative overflow-hidden group">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="billing-icon w-16 h-16 bg-purple-500 text-white rounded-lg flex items-center justify-center mb-6 transition-all duration-500 relative z-10">
+          <i class="fas fa-calendar-alt text-2xl"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-white dark:text-gray-900 mb-3 relative z-10">Subscription Model</h3>
+        <p class="text-gray-300 dark:text-gray-600 mb-5 relative z-10">
+          Predictable monthly or annual fees with tiered feature sets to match your business requirements.
+        </p>
+        <h4 class="text-lg font-semibold text-white dark:text-gray-900 mb-2 relative z-10">How it works:</h4>
+        <ul class="space-y-2 mb-6 relative z-10">
+          <li class="flex items-start text-gray-300 dark:text-gray-600">
+            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+            <span>Fixed monthly or annual payment</span>
+          </li>
+          <li class="flex items-start text-gray-300 dark:text-gray-600">
+            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+            <span>Choose from multiple tiers with different feature sets</span>
+          </li>
+          <li class="flex items-start text-gray-300 dark:text-gray-600">
+            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+            <span>Upgrade or downgrade anytime</span>
+          </li>
+        </ul>
+        <div class="relative z-10">
+          <a href="#subscriptions" class="inline-block bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-300">
+            View Plans
+          </a>
+        </div>
+      </div>
+
+      <!-- Billing Card 3 - Enterprise -->
+      <div class="billing-card bg-[#1E293B] dark:bg-white p-8 rounded-xl shadow-lg relative overflow-hidden group">
+        <div class="absolute inset-0 bg-gradient-to-br from-green-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="billing-icon w-16 h-16 bg-green-500 text-white rounded-lg flex items-center justify-center mb-6 transition-all duration-500 relative z-10">
+          <i class="fas fa-building text-2xl"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-white dark:text-gray-900 mb-3 relative z-10">Enterprise Custom</h3>
+        <p class="text-gray-300 dark:text-gray-600 mb-5 relative z-10">
+          Tailored pricing and feature packages for large organizations with complex needs.
+        </p>
+        <h4 class="text-lg font-semibold text-white dark:text-gray-900 mb-2 relative z-10">How it works:</h4>
+        <ul class="space-y-2 mb-6 relative z-10">
+          <li class="flex items-start text-gray-300 dark:text-gray-600">
+            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+            <span>Custom contracts with negotiable terms</span>
+          </li>
+          <li class="flex items-start text-gray-300 dark:text-gray-600">
+            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+            <span>Dedicated account manager and priority support</span>
+          </li>
+          <li class="flex items-start text-gray-300 dark:text-gray-600">
+            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+            <span>Custom feature development and integration</span>
+          </li>
+        </ul>
+        <div class="relative z-10">
+          <a href="#contact" class="inline-block bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-300">
+            Contact Sales
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Billing Factors Section -->
+<section id="billing-factors" class="py-16 bg-[#0F172A] dark:bg-[#F5F5F5]">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-5xl font-bold text-white dark:text-gray-900 mb-4">Billing Parameters</h2>
+      <p class="text-xl text-gray-300 dark:text-gray-600 max-w-3xl mx-auto">
+        Understanding what factors affect your pricing helps you optimize costs and plan effectively.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      <!-- Left side - Factors -->
+      <div>
+        <div class="bg-[#1E293B] dark:bg-white p-6 rounded-xl shadow-lg mb-8">
+          <div class="flex items-start mb-4">
+            <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white mr-4 flex-shrink-0">
+              <i class="fas fa-users text-xl"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-white dark:text-gray-900 mb-2">User Count</h3>
+              <p class="text-gray-300 dark:text-gray-600">
+                The number of active users in your account. Most plans have tiered pricing based on user count.
+              </p>
+            </div>
+          </div>
+          <div class="pl-16">
+            <div class="w-full bg-gray-700 dark:bg-gray-300 rounded-full h-2.5 mb-1">
+              <div class="bg-blue-500 h-2.5 rounded-full" style="width: 75%"></div>
+            </div>
+            <p class="text-right text-xs text-gray-400 dark:text-gray-500">High impact on billing</p>
+          </div>
+        </div>
+
+        <div class="bg-[#1E293B] dark:bg-white p-6 rounded-xl shadow-lg mb-8">
+          <div class="flex items-start mb-4">
+            <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white mr-4 flex-shrink-0">
+              <i class="fas fa-database text-xl"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-white dark:text-gray-900 mb-2">Storage Usage</h3>
+              <p class="text-gray-300 dark:text-gray-600">
+                Total data stored in your account, including documents, media files, and database records.
+              </p>
+            </div>
+          </div>
+          <div class="pl-16">
+            <div class="w-full bg-gray-700 dark:bg-gray-300 rounded-full h-2.5 mb-1">
+              <div class="bg-purple-500 h-2.5 rounded-full" style="width: 60%"></div>
+            </div>
+            <p class="text-right text-xs text-gray-400 dark:text-gray-500">Medium impact on billing</p>
+          </div>
+        </div>
+
+        <div class="bg-[#1E293B] dark:bg-white p-6 rounded-xl shadow-lg">
+          <div class="flex items-start mb-4">
+            <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white mr-4 flex-shrink-0">
+              <i class="fas fa-exchange-alt text-xl"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-white dark:text-gray-900 mb-2">API Requests</h3>
+              <p class="text-gray-300 dark:text-gray-600">
+                Number of API calls made to our service, important for integrations and automated workflows.
+              </p>
+            </div>
+          </div>
+          <div class="pl-16">
+            <div class="w-full bg-gray-700 dark:bg-gray-300 rounded-full h-2.5 mb-1">
+              <div class="bg-green-500 h-2.5 rounded-full" style="width: 85%"></div>
+            </div>
+            <p class="text-right text-xs text-gray-400 dark:text-gray-500">High impact on billing</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right side - Visualization -->
+      <div class="bg-[#1E293B] dark:bg-white p-8 rounded-xl shadow-lg">
+        <div class="mb-8">
+          <h3 class="text-2xl font-bold text-white dark:text-gray-900 mb-4">Cost Distribution Breakdown</h3>
+          <p class="text-gray-300 dark:text-gray-600 mb-6">
+            Average distribution of costs in our usage-based model for a typical enterprise client.
+          </p>
+        </div>
+
+        <!-- Animated Circular Chart -->
+        <div class="flex justify-center">
+          <div class="relative w-64 h-64">
+            <!-- Chart segments -->
+            <svg class="w-full h-full animate-spin-slow" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="45" fill="transparent" stroke="#ddd" stroke-width="10" />
+              
+              <!-- User Licenses - 40% -->
+              <circle cx="50" cy="50" r="45" fill="transparent" stroke="#3b82f6" stroke-width="10" 
+                    stroke-dasharray="283 283" stroke-dashoffset="170" transform="rotate(-90 50 50)" />
+              
+              <!-- Storage - 30% -->
+              <circle cx="50" cy="50" r="45" fill="transparent" stroke="#8b5cf6" stroke-width="10" 
+                    stroke-dasharray="283 283" stroke-dashoffset="198" transform="rotate(54 50 50)" />
+              
+              <!-- API Usage - 20% -->
+              <circle cx="50" cy="50" r="45" fill="transparent" stroke="#10b981" stroke-width="10" 
+                    stroke-dasharray="283 283" stroke-dashoffset="226" transform="rotate(162 50 50)" />
+              
+              <!-- Other - 10% -->
+              <circle cx="50" cy="50" r="45" fill="transparent" stroke="#f59e0b" stroke-width="10" 
+                    stroke-dasharray="283 283" stroke-dashoffset="255" transform="rotate(234 50 50)" />
+            </svg>
+            
+            <!-- Center text -->
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="text-center">
+                <span class="block text-3xl font-bold text-white dark:text-gray-900">100%</span>
+                <span class="block text-sm text-gray-300 dark:text-gray-600">Total Cost</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Legend -->
+        <div class="grid grid-cols-2 gap-4 mt-8">
+          <div class="flex items-center">
+            <div class="w-4 h-4 bg-blue-500 rounded-full mr-2"></div>
+            <span class="text-sm text-gray-300 dark:text-gray-600">Users (40%)</span>
+          </div>
+          <div class="flex items-center">
+            <div class="w-4 h-4 bg-purple-500 rounded-full mr-2"></div>
+            <span class="text-sm text-gray-300 dark:text-gray-600">Storage (30%)</span>
+          </div>
+          <div class="flex items-center">
+            <div class="w-4 h-4 bg-green-500 rounded-full mr-2"></div>
+            <span class="text-sm text-gray-300 dark:text-gray-600">API Calls (20%)</span>
+          </div>
+          <div class="flex items-center">
+            <div class="w-4 h-4 bg-yellow-500 rounded-full mr-2"></div>
+            <span class="text-sm text-gray-300 dark:text-gray-600">Other (10%)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Cost Calculator -->
+<section id="calculator" class="py-16 bg-gradient-to-b from-[#1B263B] to-[#0F172A] dark:from-[#EBF2FA] dark:to-[#F5F5F5]">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-5xl font-bold text-white dark:text-gray-900 mb-4">Cost Calculator</h2>
+      <p class="text-xl text-gray-300 dark:text-gray-600 max-w-3xl mx-auto">
+        Estimate your monthly costs based on your expected usage.
+      </p>
+    </div>
+
+    <div class="bg-[#1E293B] dark:bg-white p-8 md:p-10 rounded-xl shadow-lg max-w-4xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Left side - Sliders -->
+        <div>
+          <h3 class="text-2xl font-bold text-white dark:text-gray-900 mb-6">Adjust Parameters</h3>
+          
+          <!-- User count slider -->
+          <div class="mb-8">
+            <div class="flex justify-between mb-2">
+              <label class="text-gray-300 dark:text-gray-600 font-medium">Number of Users</label>
+              <span id="user-count" class="text-white dark:text-gray-900 font-medium">25</span>
+            </div>
+            <input type="range" min="1" max="100" value="25" class="w-full h-2 bg-gray-700 dark:bg-gray-300 rounded-lg appearance-none cursor-pointer" id="user-slider">
+            <div class="flex justify-between mt-1">
+              <span class="text-xs text-gray-400 dark:text-gray-500">1</span>
+              <span class="text-xs text-gray-400 dark:text-gray-500">100</span>
+            </div>
+          </div>
+          
+          <!-- Storage slider -->
+          <div class="mb-8">
+            <div class="flex justify-between mb-2">
+              <label class="text-gray-300 dark:text-gray-600 font-medium">Storage (GB)</label>
+              <span id="storage-count" class="text-white dark:text-gray-900 font-medium">50</span>
+            </div>
+            <input type="range" min="10" max="1000" value="50" class="w-full h-2 bg-gray-700 dark:bg-gray-300 rounded-lg appearance-none cursor-pointer" id="storage-slider">
+            <div class="flex justify-between mt-1">
+              <span class="text-xs text-gray-400 dark:text-gray-500">10 GB</span>
+              <span class="text-xs text-gray-400 dark:text-gray-500">1 TB</span>
+            </div>
+          </div>
+          
+          <!-- API calls slider -->
+          <div class="mb-8">
+            <div class="flex justify-between mb-2">
+              <label class="text-gray-300 dark:text-gray-600 font-medium">API Calls (K/month)</label>
+              <span id="api-count" class="text-white dark:text-gray-900 font-medium">100</span>
+            </div>
+            <input type="range" min="10" max="1000" value="100" class="w-full h-2 bg-gray-700 dark:bg-gray-300 rounded-lg appearance-none cursor-pointer" id="api-slider">
+            <div class="flex justify-between mt-1">
+              <span class="text-xs text-gray-400 dark:text-gray-500">10K</span>
+              <span class="text-xs text-gray-400 dark:text-gray-500">1M</span>
+            </div>
+          </div>
+          
+          <!-- Billing cycle -->
+          <div>
+            <label class="block text-gray-300 dark:text-gray-600 font-medium mb-2">Billing Cycle</label>
+            <div class="flex space-x-4">
+              <button id="monthly-btn" class="flex-1 bg-blue-500 text-white py-2 rounded-lg">Monthly</button>
+              <button id="annual-btn" class="flex-1 bg-gray-700 dark:bg-gray-300 text-gray-300 dark:text-gray-600 py-2 rounded-lg">Annual</button>
+            </div>
+            <p class="text-xs text-gray-400 dark:text-gray-500 mt-2">Save 20% with annual billing</p>
+          </div>
+        </div>
+        
+        <!-- Right side - Cost -->
+        <div class="bg-[#141F31] dark:bg-gray-100 p-6 rounded-xl">
+          <h3 class="text-2xl font-bold text-white dark:text-gray-900 mb-6">Estimated Cost</h3>
+          
+          <!-- Cost breakdown -->
+          <div class="space-y-4 mb-6">
+            <div class="flex justify-between">
+              <span class="text-gray-300 dark:text-gray-600">Users (25)</span>
+              <span class="text-white dark:text-gray-900 font-medium">$125.00</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-300 dark:text-gray-600">Storage (50 GB)</span>
+              <span class="text-white dark:text-gray-900 font-medium">$50.00</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-300 dark:text-gray-600">API Calls (100K)</span>
+              <span class="text-white dark:text-gray-900 font-medium">$40.00</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-300 dark:text-gray-600">Base Platform Fee</span>
+              <span class="text-white dark:text-gray-900 font-medium">$49.00</span>
+            </div>
+            <div class="border-t border-gray-700 dark:border-gray-300 pt-4 flex justify-between">
+              <span class="text-gray-300 dark:text-gray-600">Monthly Subtotal</span>
+              <span class="text-white dark:text-gray-900 font-medium">$264.00</span>
+            </div>
+            <div class="border-t border-gray-700 dark:border-gray-300 pt-4 flex justify-between">
+              <span class="text-white dark:text-gray-900 text-xl font-bold">Total per Month</span>
+              <span id="total-cost" class="text-white dark:text-gray-900 text-xl font-bold">$264.00</span>
+            </div>
+          </div>
+          
+          <button class="w-full bg-primary-light dark:bg-primary-dark hover:bg-opacity-90 text-white font-semibold py-3 rounded-lg transition-all duration-300">
+            Contact Sales for Quote
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-16 bg-[#0F172A] dark:bg-[#F5F5F5]">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-5xl font-bold text-white dark:text-gray-900 mb-4">Billing FAQs</h2>
+      <p class="text-xl text-gray-300 dark:text-gray-600 max-w-3xl mx-auto">
+        Get answers to common questions about our billing process.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mx-auto">
+      <!-- FAQ Item 1 -->
+      <div class="mb-4 border-b border-gray-700 dark:border-gray-300 pb-4">
+        <button class="faq-question flex justify-between items-center w-full text-left text-white dark:text-gray-900 font-semibold py-2 focus:outline-none">
+          <span>How often will I be billed?</span>
+          <i class="fas fa-chevron-down transition-transform duration-300"></i>
+        </button>
+        <div class="faq-answer mt-2 text-gray-300 dark:text-gray-600">
+          For monthly plans, you'll be billed on the same date each month. For annual plans, you'll be billed once per year on your subscription anniversary. Usage-based charges are calculated at the end of each billing cycle.
+        </div>
+      </div>
+
+      <!-- FAQ Item 2 -->
+      <div class="mb-4 border-b border-gray-700 dark:border-gray-300 pb-4">
+        <button class="faq-question flex justify-between items-center w-full text-left text-white dark:text-gray-900 font-semibold py-2 focus:outline-none">
+          <span>Can I change my billing plan?</span>
+          <i class="fas fa-chevron-down transition-transform duration-300"></i>
+        </button>
+        <div class="faq-answer mt-2 text-gray-300 dark:text-gray-600 hidden">
+          Yes, you can upgrade, downgrade, or change your billing plan at any time from your account settings. Changes to subscription tiers take effect immediately, while billing cycle changes (monthly to annual or vice versa) take effect at the next renewal.
+        </div>
+      </div>
+
+      <!-- FAQ Item 3 -->
+      <div class="mb-4 border-b border-gray-700 dark:border-gray-300 pb-4">
+        <button class="faq-question flex justify-between items-center w-full text-left text-white dark:text-gray-900 font-semibold py-2 focus:outline-none">
+          <span>What happens if I exceed my plan limits?</span>
+          <i class="fas fa-chevron-down transition-transform duration-300"></i>
+        </button>
+        <div class="faq-answer mt-2 text-gray-300 dark:text-gray-600 hidden">
+          For most resources, you'll continue to have access and will be billed for the overage at the end of your billing cycle. We'll notify you when you reach 80% and 100% of your limits. For subscription plans, you can upgrade to a higher tier to avoid overage charges.
+        </div>
+      </div>
+
+      <!-- FAQ Item 4 -->
+      <div class="mb-4 border-b border-gray-700 dark:border-gray-300 pb-4">
+        <button class="faq-question flex justify-between items-center w-full text-left text-white dark:text-gray-900 font-semibold py-2 focus:outline-none">
+          <span>Do you offer refunds?</span>
+          <i class="fas fa-chevron-down transition-transform duration-300"></i>
+        </button>
+        <div class="faq-answer mt-2 text-gray-300 dark:text-gray-600 hidden">
+          We offer a 14-day money-back guarantee for new subscriptions. Beyond that, refunds are handled on a case-by-case basis. For annual subscriptions that are canceled mid-term, we provide prorated refunds for the unused portion minus a small administrative fee.
+        </div>
+      </div>
+
+      <!-- FAQ Item 5 -->
+      <div class="mb-4 border-b border-gray-700 dark:border-gray-300 pb-4">
+        <button class="faq-question flex justify-between items-center w-full text-left text-white dark:text-gray-900 font-semibold py-2 focus:outline-none">
+          <span>What payment methods do you accept?</span>
+          <i class="fas fa-chevron-down transition-transform duration-300"></i>
+        </button>
+        <div class="faq-answer mt-2 text-gray-300 dark:text-gray-600 hidden">
+          We accept all major credit cards (Visa, Mastercard, American Express, Discover), PayPal, and bank transfers. For enterprise clients, we also support purchase orders and invoicing with net-30 payment terms upon credit approval.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-[#0F172A] dark:bg-[#1A1A1A] py-12">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+      <div>
+        <a href="#" class="flex items-center mb-6">
+          <img src="./assets/logo.png" class="h-8 mr-3" alt="Footer Logo">
+          <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">OsyRix</span>
+        </a>
+        <p class="text-gray-400 mb-4">
+          Empowering businesses with cutting-edge SaaS solutions since 2015.
+        </p>
+        <div class="flex space-x-4">
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+            <i class="fab fa-twitter text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+            <i class="fab fa-linkedin text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+            <i class="fab fa-facebook text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+            <i class="fab fa-instagram text-xl"></i>
+          </a>
+        </div>
+      </div>
+      
+      <div>
+        <h3 class="text-white font-semibold text-lg mb-4">Solutions</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Business Automation</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Data Analytics</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">AI Integration</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Cloud Solutions</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Custom Development</a></li>
+        </ul>
+      </div>
+      
+      <div>
+        <h3 class="text-white font-semibold text-lg mb-4">Company</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">About Us</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Careers</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Blog</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Press</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Partners</a></li>
+        </ul>
+      </div>
+      
+      <div>
+        <h3 class="text-white font-semibold text-lg mb-4">Resources</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Documentation</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">API Reference</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Tutorials</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Support Center</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Community</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+      <div class="text-gray-400 mb-4 md:mb-0">
+        &copy; 2025 OsyRix, Inc. All rights reserved.
+      </div>
+      <div class="flex space-x-6">
+        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Privacy Policy</a>
+        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Terms of Service</a>
+        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Cookie Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- JavaScript for interactive elements -->
+<script>
+  // Theme toggle functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    // Themes
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener('click', function() {
+        document.documentElement.classList.toggle('dark');
+        
+        // Save preference to local storage
+        if (document.documentElement.classList.contains('dark')) {
+          localStorage.setItem('color-theme', 'dark');
+        } else {
+          localStorage.setItem('color-theme', 'light');
+        }
+      });
+    }
+    
+    // Check for saved theme preference or use OS preference
+    if (localStorage.getItem('color-theme') === 'dark' || 
+        (!localStorage.getItem('color-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    
+    // FAQ accordion functionality
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    
+    faqQuestions.forEach(question => {
+      question.addEventListener('click', () => {
+        const answer = question.nextElementSibling;
+        const icon = question.querySelector('i');
+        
+        answer.classList.toggle('hidden');
+        icon.classList.toggle('rotate-180');
+        
+        // Close other FAQs
+        faqQuestions.forEach(q => {
+          if (q !== question) {
+            q.nextElementSibling.classList.add('hidden');
+            q.querySelector('i').classList.remove('rotate-180');
+          }
+        });
+      });
+    });
+    
+    // Show the first FAQ by default
+    if (faqQuestions.length > 0) {
+      faqQuestions[0].nextElementSibling.classList.remove('hidden');
+      faqQuestions[0].querySelector('i').classList.add('rotate-180');
+    }
+    
+    // Cost calculator functionality
+    const userSlider = document.getElementById('user-slider');
+    const userCount = document.getElementById('user-count');
+    const storageSlider = document.getElementById('storage-slider');
+    const storageCount = document.getElementById('storage-count');
+    const apiSlider = document.getElementById('api-slider');
+    const apiCount = document.getElementById('api-count');
+    const totalCost = document.getElementById('total-cost');
+    const monthlyBtn = document.getElementById('monthly-btn');
+    const annualBtn = document.getElementById('annual-btn');
+    
+    let isAnnual = false;
+    
+    function updateCost() {
+      const userCost = parseInt(userSlider.value) * 5;
+      const storageCost = parseInt(storageSlider.value) * 1;
+      const apiCost = parseInt(apiSlider.value) * 0.4;
+      const baseFee = 49;
+      
+      let total = userCost + storageCost + apiCost + baseFee;
+      
+      if (isAnnual) {
+        total = total * 0.8; // 20% discount for annual
+      }
+      
+      totalCost.textContent = `$${total.toFixed(2)}`;
+    }
+    
+    if (userSlider && userCount) {
+      userSlider.addEventListener('input', function() {
+        userCount.textContent = this.value;
+        updateCost();
+      });
+    }
+    
+    if (storageSlider && storageCount) {
+      storageSlider.addEventListener('input', function() {
+        storageCount.textContent = this.value;
+        updateCost();
+      });
+    }
+    
+    if (apiSlider && apiCount) {
+      apiSlider.addEventListener('input', function() {
+        apiCount.textContent = this.value;
+        updateCost();
+      });
+    }
+    
+    if (monthlyBtn && annualBtn) {
+      monthlyBtn.addEventListener('click', function() {
+        isAnnual = false;
+        monthlyBtn.classList.add('bg-blue-500');
+        monthlyBtn.classList.remove('bg-gray-700', 'dark:bg-gray-300');
+        monthlyBtn.classList.add('text-white');
+        monthlyBtn.classList.remove('text-gray-300', 'dark:text-gray-600');
+        
+        annualBtn.classList.remove('bg-blue-500');
+        annualBtn.classList.add('bg-gray-700', 'dark:bg-gray-300');
+        annualBtn.classList.remove('text-white');
+        annualBtn.classList.add('text-gray-300', 'dark:text-gray-600');
+        
+        updateCost();
+      });
+      
+      annualBtn.addEventListener('click', function() {
+        isAnnual = true;
+        annualBtn.classList.add('bg-blue-500');
+        annualBtn.classList.remove('bg-gray-700', 'dark:bg-gray-300');
+        annualBtn.classList.add('text-white');
+        annualBtn.classList.remove('text-gray-300', 'dark:text-gray-600');
+        
+        monthlyBtn.classList.remove('bg-blue-500');
+        monthlyBtn.classList.add('bg-gray-700', 'dark:bg-gray-300');
+        monthlyBtn.classList.remove('text-white');
+        monthlyBtn.classList.add('text-gray-300', 'dark:text-gray-600');
+        
+        updateCost();
+      });
+    }
+    
+    // Initialize cost
+    updateCost();
+  });
+
+  // Add smooth scrolling for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      document.querySelector(this.getAttribute('href')).scrollIntoView({
+        behavior: 'smooth'
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

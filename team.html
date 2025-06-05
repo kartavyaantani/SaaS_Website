@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="./tailwind.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Team - OsyRix</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- NAVBAR JS CDN -->
+  <script src="Navbar.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            lightbg: '#0d1b2a',
+            darkbg: '#FEFFEA',
+            darkgreen: {
+              500: '#1B5E20',
+              600: '#0D4D14'
+            },
+            primary: {
+              light: '#3b82f6',
+              dark: '#2563eb'
+            },
+            secondary: {
+              light: '#10b981',
+              dark: '#059669'
+            }
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'float-reverse': 'float-reverse 5s ease-in-out infinite',
+            'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-20px)' }
+            },
+            'float-reverse': {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(20px)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    canvas {
+      display: block;
+    }
+
+    .glass-heading {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .dark .glass-heading {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    @media (hover: none) {
+      .glass-heading {
+        background: rgba(255, 255, 255, 0.7);
+      }
+      .dark .glass-heading {
+        background: rgba(0, 0, 0, 0.7);
+      }
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .team-card {
+      transition: all 0.3s ease;
+    }
+
+    .team-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .dark .team-card:hover {
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .social-icon {
+      transition: all 0.3s ease;
+      opacity: 0.7;
+    }
+
+    .social-icon:hover {
+      transform: translateY(-3px);
+      opacity: 1;
+    }
+
+    .team-photo {
+      transition: all 0.4s ease;
+    }
+
+    .team-card:hover .team-photo {
+      transform: scale(1.05);
+    }
+
+    .gradient-text {
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .gradient-bg {
+      background-size: 200% 200%;
+      animation: gradient 15s ease infinite;
+    }
+
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+  </style>
+</head>
+<body class="bg-lightbg dark:bg-darkbg custom-cursor h-full m-0 p-0">
+ <!-- Navbar -->
+  <nav class="bg-white border-gray-200 dark:bg-[#0F0606] dark:border-gray-700 rounded-3xl">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <img src="./assets/logo.png" class="h-8" alt="Main Logo" />
+        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">OsyRix</span>
+      </a>
+      <button data-collapse-toggle="navbar-multi-level" type="button" class="custom-cursor inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-multi-level" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+        </svg>
+      </button>
+      <div class="hidden w-full md:block md:w-auto " id="navbar-multi-level">
+        <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-[#0F0606] md:dark:bg-[#0F0606] dark:border-gray-700">
+          <li>
+            <a href="./homepage.html" class="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-[#0F0606]" aria-current="page">Home</a>
+          </li>
+          <li>
+            <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="custom-cursor flex items-center justify-between w-full py-2 px-3 text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:hover:bg-gray-700 md:dark:hover:bg-transparent ">More <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+            </svg></button>
+            <!-- Dropdown menu -->
+            <div id="dropdownNavbar" class="custom-cursor z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600 ">
+              <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownLargeButton">
+                <li>
+                  <a href="./projects.html" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Projects</a>
+                </li>
+                <li aria-labelledby="dropdownNavbarLink">
+                  <button id="doubleDropdownButton" data-dropdown-toggle="doubleDropdown" data-dropdown-placement="right-start" type="button" class="custom-cursor flex items-center justify-between w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Company<svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                  </svg></button>
+                  <div id="doubleDropdown" class="custom-cursor z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700">
+                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="doubleDropdownButton">
+                      <li>
+                        <a href="./technologies.html" class="custom-cursor block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Technologies</a>
+                      </li>
+                      <li>
+                        <a href="./billing.html" class="custom-cursor block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Billing</a>
+                      </li>
+                      <li>
+                        <a href="./team.html" class="custom-cursor block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Our Team</a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+              <div class="py-1">
+                <a href="./about-us.html" class="custom-cursor block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">About Us</a>
+              </div>
+            </div>
+          </li>
+          <li>
+            <a href="./services.html" class="custom-cursor block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Services</a>
+          </li>
+          <li>
+            <a href="./pricing.html" class="custom-cursor block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Pricing</a>
+          </li>
+          <li>
+            <a href="./contact.html" class="custom-cursor block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</a>
+          </li>
+          <li>
+            <a href="https://github.com/kartavyaantani" class="custom-cursor ml-4 bg-primary-light dark:bg-primary-dark text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-all duration-300">Get Started</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<!-- Hero Section -->
+<section class="relative pt-20 pb-16 overflow-hidden">
+  <div class="absolute inset-0 z-0">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-lightbg dark:to-darkbg opacity-90"></div>
+    <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 dark:opacity-5"></div>
+  </div>
+  
+  <div class="container mx-auto px-4 relative z-0">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-6xl font-bold text-white dark:text-gray-900 mb-4 ">
+        Meet Our <span class="gradient-text bg-gradient-to-r from-primary-light to-secondary-light dark:from-primary-dark dark:to-secondary-dark">Talented Team</span>
+      </h1>
+      <p class="text-xl text-gray-300 dark:text-gray-700 max-w-3xl mx-auto">
+        The passionate professionals behind OsyRix's success, working together to deliver innovative solutions.
+      </p>
+    </div>
+    
+    <!-- Light/Dark Mode Toggle Button -->
+    <div class="fixed bottom-6 right-6 z-50">
+      <button id="theme-toggle" class="p-3 bg-gray-800 dark:bg-white rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+        <svg id="sun-icon" class="w-6 h-6 text-yellow-300 hidden dark:block" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path>
+        </svg>
+        <svg id="moon-icon" class="w-6 h-6 text-gray-100 block dark:hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Leadership Team Section -->
+<section class="py-16 bg-[#0F172A] dark:bg-[#F5F5F5]">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-white dark:text-gray-900 mb-4">
+        Leadership Team
+      </h2>
+      <div class="w-24 h-1 bg-primary-light dark:bg-primary-dark mx-auto mb-6"></div>
+      <p class="text-lg text-gray-300 dark:text-gray-600 max-w-2xl mx-auto">
+        Meet the visionaries who lead OsyRix's strategic direction and drive our mission forward.
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+      <!-- CEO -->
+      <div class="team-card bg-[#1E293B] dark:bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="h-64 overflow-hidden relative">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10"></div>
+          <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a" alt="Jonathan Pierce" class="team-photo w-full h-full object-cover">
+        </div>
+        <div class="p-6">
+          <h3 class="text-2xl font-bold text-white dark:text-gray-900 mb-1">Jonathan Pierce</h3>
+          <p class="text-primary-light dark:text-primary-dark font-semibold mb-3">CEO & Founder</p>
+          <p class="text-gray-300 dark:text-gray-600 mb-4">
+            Jonathan founded OsyRix with a vision to transform how businesses leverage technology. With 15+ years of experience in tech leadership, he drives innovation and growth.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="social-icon text-gray-400 hover:text-primary-light dark:hover:text-primary-dark transition-colors duration-300">
+              <i class="fab fa-linkedin text-xl"></i>
+            </a>
+            <a href="#" class="social-icon text-gray-400 hover:text-primary-light dark:hover:text-primary-dark transition-colors duration-300">
+              <i class="fab fa-twitter text-xl"></i>
+            </a>
+            <a href="#" class="social-icon text-gray-400 hover:text-primary-light dark:hover:text-primary-dark transition-colors duration-300">
+              <i class="fas fa-envelope text-xl"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- CTO -->
+      <div class="team-card bg-[#1E293B] dark:bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="h-64 overflow-hidden relative">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10"></div>
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2" alt="Sophia Chen" class="team-photo w-full h-full object-cover">
+        </div>
+        <div class="p-6">
+          <h3 class="text-2xl font-bold text-white dark:text-gray-900 mb-1">Sophia Chen</h3>
+          <p class="text-primary-light dark:text-primary-dark font-semibold mb-3">CTO</p>
+          <p class="text-gray-300 dark:text-gray-600 mb-4">
+            A brilliant technologist with a Ph.D. in Computer Science, Sophia leads our engineering team in building scalable, cutting-edge solutions that power the OsyRix platform.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="social-icon text-gray-400 hover:text-primary-light dark:hover:text-primary-dark transition-colors duration-300">
+              <i class="fab fa-linkedin text-xl"></i>
+            </a>
+            <a href="#" class="social-icon text-gray-400 hover:text-primary-light dark:hover:text-primary-dark transition-colors duration-300">
+              <i class="fab fa-github text-xl"></i>
+            </a>
+            <a href="#" class="social-icon text-gray-400 hover:text-primary-light dark:hover:text-primary-dark transition-colors duration-300">
+              <i class="fas fa-envelope text-xl"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- COO -->
+      <div class="team-card bg-[#1E293B] dark:bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="h-64 overflow-hidden relative">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10"></div>
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d" alt="David Rodriguez" class="team-photo w-full h-full object-cover">
+        </div>
+        <div class="p-6">
+          <h3 class="text-2xl font-bold text-white dark:text-gray-900 mb-1">David Rodriguez</h3>
+          <p class="text-primary-light dark:text-primary-dark font-semibold mb-3">COO</p>
+          <p class="text-gray-300 dark:text-gray-600 mb-4">
+            With extensive experience in scaling operations for tech companies, David ensures that OsyRix delivers exceptional service while maintaining operational excellence.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="social-icon text-gray-400 hover:text-primary-light dark:hover:text-primary-dark transition-colors duration-300">
+              <i class="fab fa-linkedin text-xl"></i>
+            </a>
+            <a href="#" class="social-icon text-gray-400 hover:text-primary-light dark:hover:text-primary-dark transition-colors duration-300">
+              <i class="fab fa-twitter text-xl"></i>
+            </a>
+            <a href="#" class="social-icon text-gray-400 hover:text-primary-light dark:hover:text-primary-dark transition-colors duration-300">
+              <i class="fas fa-envelope text-xl"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Department Tabs -->
+<section class="py-16 bg-[#1B263B] dark:bg-[#EAEAEA]">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-white dark:text-gray-900 mb-4">
+        Our Departments
+      </h2>
+      <div class="w-24 h-1 bg-secondary-light dark:bg-secondary-dark mx-auto mb-6"></div>
+      <p class="text-lg text-gray-300 dark:text-gray-600 max-w-2xl mx-auto">
+        Talented specialists working together across departments to deliver excellence.
+      </p>
+    </div>
+    
+    <!-- Tabs Navigation -->
+    <div class="flex flex-wrap justify-center mb-8">
+      <button class="tab-button active px-6 py-3 mx-2 mb-3 bg-primary-light dark:bg-primary-dark text-white rounded-lg hover:bg-opacity-90 transition-all duration-300 focus:outline-none" data-tab="engineering">
+        Engineering
+      </button>
+      <button class="tab-button px-6 py-3 mx-2 mb-3 bg-white/10 dark:bg-black/10 text-white dark:text-gray-900 rounded-lg hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-300 focus:outline-none" data-tab="design">
+        Design
+      </button>
+      <button class="tab-button px-6 py-3 mx-2 mb-3 bg-white/10 dark:bg-black/10 text-white dark:text-gray-900 rounded-lg hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-300 focus:outline-none" data-tab="marketing">
+        Marketing
+      </button>
+      <button class="tab-button px-6 py-3 mx-2 mb-3 bg-white/10 dark:bg-black/10 text-white dark:text-gray-900 rounded-lg hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-300 focus:outline-none" data-tab="customer-support">
+        Customer Support
+      </button>
+    </div>
+    
+    <!-- Tab Content -->
+    <div class="tab-content" id="engineering">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Team Member 1 -->
+        <div class="team-card bg-[#0F172A] dark:bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7" alt="Michael Zhang" class="team-photo w-full h-full object-cover">
+          </div>
+          <div class="p-5">
+            <h3 class="text-lg font-bold text-white dark:text-gray-900 mb-1">Michael Zhang</h3>
+            <p class="text-primary-light dark:text-primary-dark font-medium mb-2">Lead Engineer</p>
+            <p class="text-sm text-gray-300 dark:text-gray-600">
+              Backend architecture specialist with expertise in distributed systems.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Team Member 2 -->
+        <div class="team-card bg-[#0F172A] dark:bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1639149888905-fb39ba11f152" alt="Aisha Patel" class="team-photo w-full h-full object-cover">
+          </div>
+          <div class="p-5">
+            <h3 class="text-lg font-bold text-white dark:text-gray-900 mb-1">Aisha Patel</h3>
+            <p class="text-primary-light dark:text-primary-dark font-medium mb-2">AI Engineer</p>
+            <p class="text-sm text-gray-300 dark:text-gray-600">
+              Machine learning expert focused on building intelligent automation.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Team Member 3 -->
+        <div class="team-card bg-[#0F172A] dark:bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1607990281513-2c110a25bd8c" alt="Raj Kumar" class="team-photo w-full h-full object-cover">
+          </div>
+          <div class="p-5">
+            <h3 class="text-lg font-bold text-white dark:text-gray-900 mb-1">Raj Kumar</h3>
+            <p class="text-primary-light dark:text-primary-dark font-medium mb-2">Frontend Developer</p>
+            <p class="text-sm text-gray-300 dark:text-gray-600">
+              UI/UX specialist creating seamless user experiences.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Team Member 4 -->
+        <div class="team-card bg-[#0F172A] dark:bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956" alt="Zoe Martinez" class="team-photo w-full h-full object-cover">
+          </div>
+          <div class="p-5">
+            <h3 class="text-lg font-bold text-white dark:text-gray-900 mb-1">Zoe Martinez</h3>
+            <p class="text-primary-light dark:text-primary-dark font-medium mb-2">DevOps Engineer</p>
+            <p class="text-sm text-gray-300 dark:text-gray-600">
+              Cloud infrastructure and CI/CD pipeline specialist.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="tab-content hidden" id="design">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Team Member 1 -->
+        <div class="team-card bg-[#0F172A] dark:bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1540569014015-19a7be504e3a" alt="Emma Wilson" class="team-photo w-full h-full object-cover">
+          </div>
+          <div class="p-5">
+            <h3 class="text-lg font-bold text-white dark:text-gray-900 mb-1">Emma Wilson</h3>
+            <p class="text-primary-light dark:text-primary-dark font-medium mb-2">Design Director</p>
+            <p class="text-sm text-gray-300 dark:text-gray-600">
+              Leading the design vision with 12+ years of experience.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Team Member 2 -->
+        <div class="team-card bg-[#0F172A] dark:bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a" alt="Kenji Tanaka" class="team-photo w-full h-full object-cover">
+          </div>
+          <div class="p-5">
+            <h3 class="text-lg font-bold text-white dark:text-gray-900 mb-1">Kenji Tanaka</h3>
+            <p class="text-primary-light dark:text-primary-dark font-medium mb-2">UI Designer</p>
+            <p class="text-sm text-gray-300 dark:text-gray-600">
+              Creating beautiful, intuitive interfaces for our products.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Team Member 3 -->
+        <div class="team-card bg-[#0F172A] dark:bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330" alt="Maya Johnson" class="team-photo w-full h-full object-cover">
+          </div>
+          <div class="p-5">
+            <h3 class="text-lg font-bold text-white dark:text-gray-900 mb-1">Maya Johnson</h3>
+            <p class="text-primary-light dark:text-primary-dark font-medium mb-2">UX Researcher</p>
+            <p class="text-sm text-gray-300 dark:text-gray-600">
+              Focusing on understanding user needs and behaviors.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Team Member 4 -->
+        <div class="team-card bg-[#0F172A] dark:bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1587723958656-ee042cc915a0" alt="Felix Kim" class="team-photo w-full h-full object-cover">
+          </div>
+          <div class="p-5">
+            <h3 class="text-lg font-bold text-white dark:text-gray-900 mb-1">Felix Kim</h3>
+            <p class="text-primary-light dark:text-primary-dark font-medium mb-2">Motion Designer</p>
+            <p class="text-sm text-gray-300 dark:text-gray-600">
+              Creating engaging animations and interactive elements.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="tab-content hidden" id="marketing">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Team Member 1 -->
+        <div class="team-card bg-[#0F172A] dark:bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40" alt="James Foster" class="team-photo w-full h-full object-cover">
+          </div>
+          <div class="p-5">
+            <h3 class="text-lg font-bold text-white dark:text-gray-900 mb-1">James Foster</h3>
+            <p class="text-primary-light dark:text-primary-dark font-medium mb-2">Marketing Director</p>
+            <p class="text-sm text-gray-300 dark:text-gray-600">
+              Strategy expert leading our global marketing initiatives.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Team Member 2 -->
+        <div class="team-card bg-[#0F172A] dark:bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1567532939604-b6b5b0db2604" alt="Priya Singh" class="team-photo w-full h-full object-cover">
+          </div>
+          <div class="p-5">
+            <h3 class="text-lg font-bold text-white dark:text-gray-900 mb-1">Priya Singh</h3>
+            <p class="text-primary-light dark:text-primary-dark font-medium mb-2">Content Strategist</p>
+            <p class="text-sm text-gray-300 dark:text-gray-600">
+              Creating compelling stories that showcase our solutions.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Team Member 3 -->
+        <div class="team-card bg-[#0F172A] dark:bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb" alt="Anna Lewis" class="team-photo w-full h-full object-cover">
+          </div>
+          <div class="p-5">
+            <h3 class="text-lg font-bold text-white dark:text-gray-900 mb-1">Anna Lewis</h3>
+            <p class="text-primary-light dark:text-primary-dark font-medium mb-2">Digital Marketing</p>
+            <p class="text-sm text-gray-300 dark:text-gray-600">
+              SEO and paid campaign specialist driving growth.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Team Member 4 -->
+        <div class="team-card bg-[#0F172A] dark:bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12" alt="Thomas Garcia" class="team-photo w-full h-full object-cover">
+          </div>
+          <div class="p-5">
+            <h3 class="text-lg font-bold text-white dark:text-gray-900 mb-1">Thomas Garcia</h3>
+            <p class="text-primary-light dark:text-primary-dark font-medium mb-2">Brand Manager</p>
+            <p class="text-sm text-gray-300 dark:text-gray-600">
+              Ensuring consistent brand identity across all channels.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="tab-content hidden" id="customer-support">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Team Member 1 -->
+        <div class="team-card bg-[#0F172A] dark:bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1574158622682-e40e69881006" alt="Sarah Miller" class="team-photo w-full h-full object-cover">
+          </div>
+          <div class="p-5">
+            <h3 class="text-lg font-bold text-white dark:text-gray-900 mb-1">Sarah Miller</h3>
+            <p class="text-primary-light dark:text-primary-dark font-medium mb-2">Support Director</p>
+            <p class="text-sm text-gray-300 dark:text-gray-600">
+              Leading our global customer success initiatives.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Team Member 2 -->
+        <div class="team-card bg-[#0F172A] dark:bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e" alt="Carlos Mendez" class="team-photo w-full h-full object-cover">
+          </div>
+          <div class="p-5">
+            <h3 class="text-lg font-bold text-white dark:text-gray-900 mb-1">Carlos Mendez</h3>
+            <p class="text-primary-light dark:text-primary-dark font-medium mb-2">Technical Support</p>
+            <p class="text-sm text-gray-300 dark:text-gray-600">
+              Solving complex technical challenges for our clients.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Team Member 3 -->
+        <div class="team-card bg-[#0F172A] dark:bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1614644147798-f8c0fc9da7f6" alt="Lisa Wong" class="team-photo w-full h-full object-cover">
+          </div>
+          <div class="p-5">
+            <h3 class="text-lg font-bold text-white dark:text-gray-900 mb-1">Lisa Wong</h3>
+            <p class="text-primary-light dark:text-primary-dark font-medium mb-2">Account Manager</p>
+            <p class="text-sm text-gray-300 dark:text-gray-600">
+              Ensuring client success and satisfaction.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Team Member 4 -->
+        <div class="team-card bg-[#0F172A] dark:bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde" alt="Daniel Brown" class="team-photo w-full h-full object-cover">
+          </div>
+          <div class="p-5">
+            <h3 class="text-lg font-bold text-white dark:text-gray-900 mb-1">Daniel Brown</h3>
+            <p class="text-primary-light dark:text-primary-dark font-medium mb-2">Customer Onboarding</p>
+            <p class="text-sm text-gray-300 dark:text-gray-600">
+              Guiding new clients through implementation.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Company Culture Section -->
+<section class="py-16 bg-[#0F172A] dark:bg-[#F5F5F5]">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-white dark:text-gray-900 mb-4">
+        Our Company Culture
+      </h2>
+      <div class="w-24 h-1 bg-primary-light dark:bg-primary-dark mx-auto mb-6"></div>
+      <p class="text-lg text-gray-300 dark:text-gray-600 max-w-2xl mx-auto">
+        What makes working at OsyRix special and drives our success.
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Value 1 -->
+      <div class="bg-[#1E293B] dark:bg-white rounded-xl p-8 shadow-lg transform transition-all duration-300 hover:scale-[1.02]">
+        <div class="w-16 h-16 bg-primary-light dark:bg-primary-dark rounded-full flex items-center justify-center mb-6 text-white">
+          <i class="fas fa-rocket text-2xl"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-white dark:text-gray-900 mb-3">Innovation</h3>
+        <p class="text-gray-300 dark:text-gray-600">
+          We constantly push boundaries and challenge the status quo to create groundbreaking solutions that drive the industry forward.
+        </p>
+      </div>
+      
+      <!-- Value 2 -->
+      <div class="bg-[#1E293B] dark:bg-white rounded-xl p-8 shadow-lg transform transition-all duration-300 hover:scale-[1.02]">
+        <div class="w-16 h-16 bg-secondary-light dark:bg-secondary-dark rounded-full flex items-center justify-center mb-6 text-white">
+          <i class="fas fa-users text-2xl"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-white dark:text-gray-900 mb-3">Collaboration</h3>
+        <p class="text-gray-300 dark:text-gray-600">
+          We believe the best results come from diverse teams working together, sharing knowledge and building on each other's strengths.
+        </p>
+      </div>
+      
+      <!-- Value 3 -->
+      <div class="bg-[#1E293B] dark:bg-white rounded-xl p-8 shadow-lg transform transition-all duration-300 hover:scale-[1.02]">
+        <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mb-6 text-white">
+          <i class="fas fa-hand-holding-heart text-2xl"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-white dark:text-gray-900 mb-3">Customer Focus</h3>
+        <p class="text-gray-300 dark:text-gray-600">
+          Everything we do is aimed at creating value for our customers and helping them succeed in their business objectives.
+        </p>
+      </div>
+    </div>
+    
+    <!-- Culture Gallery -->
+    <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="md:col-span-2 h-80 rounded-xl overflow-hidden transform transition-all duration-500 hover:scale-[1.02]">
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c" alt="Team Collaboration" class="w-full h-full object-cover">
+      </div>
+      <div class="h-80 rounded-xl overflow-hidden transform transition-all duration-500 hover:scale-[1.02]">
+        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf" alt="Office Space" class="w-full h-full object-cover">
+      </div>
+      <div class="h-80 rounded-xl overflow-hidden transform transition-all duration-500 hover:scale-[1.02]">
+        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692" alt="Team Meeting" class="w-full h-full object-cover">
+      </div>
+      <div class="md:col-span-2 h-80 rounded-xl overflow-hidden transform transition-all duration-500 hover:scale-[1.02]">
+        <img src="https://images.unsplash.com/photo-1520333789090-1afc82db536a" alt="Team Building" class="w-full h-full object-cover">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Join Our Team CTA -->
+<section class="py-16 bg-gradient-to-r from-primary-light to-secondary-light dark:from-primary-dark dark:to-secondary-dark">
+  <div class="container mx-auto px-4 text-center">
+    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Join Our Team</h2>
+    <p class="text-xl text-white/90 mb-8 max-w-3xl mx-auto">
+      We're always looking for talented individuals who are passionate about technology and innovation. Discover opportunities to grow with us.
+    </p>
+    <a href="#" class="inline-block bg-white hover:bg-white/90 text-primary-light dark:text-primary-dark font-semibold py-3 px-8 rounded-lg transition-all duration-300">
+      View Open Positions
+    </a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-[#0F172A] dark:bg-[#1A1A1A] py-12">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+      <div>
+        <a href="homepage.html" class="flex items-center mb-6">
+          <img src="./assets/logo.png" class="h-8 mr-3" alt="Footer Logo">
+          <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">OsyRix</span>
+        </a>
+        <p class="text-gray-400 mb-4">
+          Empowering businesses with cutting-edge SaaS solutions since 2015.
+        </p>
+        <div class="flex space-x-4">
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+            <i class="fab fa-twitter text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+            <i class="fab fa-linkedin text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+            <i class="fab fa-facebook text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+            <i class="fab fa-instagram text-xl"></i>
+          </a>
+        </div>
+      </div>
+      
+      <div>
+        <h3 class="text-white font-semibold text-lg mb-4">Solutions</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Business Automation</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Data Analytics</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">AI Integration</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Cloud Solutions</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Custom Development</a></li>
+        </ul>
+      </div>
+      
+      <div>
+        <h3 class="text-white font-semibold text-lg mb-4">Company</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">About Us</a></li>
+          <li><a href="team.html" class="text-primary-light hover:text-white transition-colors duration-300">Our Team</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Blog</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Press</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Partners</a></li>
+        </ul>
+      </div>
+      
+      <div>
+        <h3 class="text-white font-semibold text-lg mb-4">Resources</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Documentation</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Tutorials</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Case Studies</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">FAQs</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">API Reference</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="pt-8 mt-8 border-t border-gray-800 dark:border-gray-700 flex flex-col md:flex-row justify-between items-center">
+      <p class="text-gray-400 mb-4 md:mb-0">&copy; 2025 OsyRix. All rights reserved.</p>
+      <div class="flex space-x-6">
+        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 text-sm">Privacy Policy</a>
+        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 text-sm">Terms of Service</a>
+        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 text-sm">Cookie Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- JavaScript for Dark Mode Toggle -->
+<script>
+  // Check for dark mode preference
+  if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+
+  // Dark mode toggle functionality
+  document.getElementById('theme-toggle').addEventListener('click', function() {
+    if (document.documentElement.classList.contains('dark')) {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('color-theme', 'light');
+    } else {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('color-theme', 'dark');
+    }
+  });
+  
+  // Tab functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const tabId = this.dataset.tab;
+        
+        // Hide all tab contents
+        tabContents.forEach(content => {
+          content.classList.add('hidden');
+        });
+        
+        // Remove active class from all buttons
+        tabButtons.forEach(btn => {
+          btn.classList.remove('active', 'bg-primary-light', 'dark:bg-primary-dark');
+          btn.classList.add('bg-white/10', 'dark:bg-black/10');
+        });
+        
+        // Show active tab content
+        document.getElementById(tabId).classList.remove('hidden');
+        
+        // Add active class to clicked button
+        this.classList.add('active', 'bg-primary-light', 'dark:bg-primary-dark');
+        this.classList.remove('bg-white/10', 'dark:bg-black/10');
+      });
+    });
+  });
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      const targetId = this.getAttribute('href');
+      if (targetId === '#') return;
+      
+      const targetElement = document.querySelector(targetId);
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
+
+  // Animation on scroll
+  function animateOnScroll() {
+    const elements = document.querySelectorAll('.team-card, .culture-item');
+    
+    elements.forEach(element => {
+      const elementPosition = element.getBoundingClientRect().top;
+      const screenHeight = window.innerHeight;
+      
+      if (elementPosition < screenHeight * 0.85) {
+        element.classList.add('animate-fadeIn');
+      }
+    });
+  }
+  
+  window.addEventListener('scroll', animateOnScroll);
+  window.addEventListener('load', animateOnScroll);
+</script>
+
+<!-- Flowbite JS for Navbar -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+</body>
+</html>

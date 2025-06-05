@@ -1,0 +1,8 @@
+.custom-cursor {
+  cursor: url('assets/CURSOR.png') 16 16, auto !important;
+}
+
+spline-viewer {
+  transform: scale(1.2);
+  transform-origin: center;
+}

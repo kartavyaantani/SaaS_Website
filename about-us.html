@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="./tailwind.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OsyRix - About Us</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- NAVBAR JS CDN -->
+  <script src="Navbar.js"></script>
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            lightbg: '#0d1b2a',
+            darkbg: '#FEFFEA',
+            darkgreen: {
+              500: '#1B5E20',
+              600: '#0D4D14'
+            },
+            primary: {
+              light: '#3b82f6',
+              dark: '#2563eb'
+            },
+            secondary: {
+              light: '#10b981',
+              dark: '#059669'
+            }
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'float-reverse': 'float-reverse 5s ease-in-out infinite',
+            'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-20px)' }
+            },
+            'float-reverse': {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(20px)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    canvas {
+      display: block;
+    }
+
+    .glass-heading {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .dark .glass-heading {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    @media (hover: none) {
+      .glass-heading {
+        background: rgba(255, 255, 255, 0.7);
+      }
+      .dark .glass-heading {
+        background: rgba(0, 0, 0, 0.7);
+      }
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .feature-card:hover .feature-icon {
+      transform: rotateY(180deg) scale(1.1);
+    }
+
+    .testimonial-card {
+      transition: all 0.3s ease;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .dark .testimonial-card:hover {
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .team-card {
+      transition: all 0.4s ease;
+      overflow: hidden;
+    }
+
+    .team-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .team-card:hover .team-overlay {
+      opacity: 1;
+    }
+
+    .team-card:hover .team-img {
+      transform: scale(1.05);
+    }
+
+    .team-img {
+      transition: transform 0.5s ease;
+    }
+
+    .team-overlay {
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+    }
+
+    .gradient-text {
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .timeline-item {
+      position: relative;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      background-color: #3b82f6;
+      top: 0;
+      bottom: 0;
+      left: 7px;
+    }
+
+    .dark .timeline-item::before {
+      background-color: #2563eb;
+    }
+
+    .timeline-circle {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background-color: #3b82f6;
+      left: 0;
+      top: 0;
+    }
+
+    .dark .timeline-circle {
+      background-color: #2563eb;
+    }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .dark .glass-card {
+      background: rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    
+    .animate-on-scroll.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body class="bg-lightbg dark:bg-darkbg custom-cursor h-full m-0 p-0">
+
+   <!-- Navbar -->
+  <nav class="bg-white border-gray-200 dark:bg-[#0F0606] dark:border-gray-700 rounded-3xl">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <img src="./assets/logo.png" class="h-8" alt="Main Logo" />
+        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">OsyRix</span>
+      </a>
+      <button data-collapse-toggle="navbar-multi-level" type="button" class="custom-cursor inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-multi-level" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+        </svg>
+      </button>
+      <div class="hidden w-full md:block md:w-auto " id="navbar-multi-level">
+        <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-[#0F0606] md:dark:bg-[#0F0606] dark:border-gray-700">
+          <li>
+            <a href="./homepage.html" class="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-[#0F0606]" aria-current="page">Home</a>
+          </li>
+          <li>
+            <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="custom-cursor flex items-center justify-between w-full py-2 px-3 text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:hover:bg-gray-700 md:dark:hover:bg-transparent ">More <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+            </svg></button>
+            <!-- Dropdown menu -->
+            <div id="dropdownNavbar" class="custom-cursor z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600 ">
+              <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownLargeButton">
+                <li>
+                  <a href="./projects.html" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Projects</a>
+                </li>
+                <li aria-labelledby="dropdownNavbarLink">
+                  <button id="doubleDropdownButton" data-dropdown-toggle="doubleDropdown" data-dropdown-placement="right-start" type="button" class="custom-cursor flex items-center justify-between w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Company<svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                  </svg></button>
+                  <div id="doubleDropdown" class="custom-cursor z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700">
+                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="doubleDropdownButton">
+                      <li>
+                        <a href="./technologies.html" class="custom-cursor block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Technologies</a>
+                      </li>
+                      <li>
+                        <a href="./billing.html" class="custom-cursor block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Billing</a>
+                      </li>
+                      <li>
+                        <a href="./team.html" class="custom-cursor block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Our Team</a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+              <div class="py-1">
+                <a href="./about-us.html" class="custom-cursor block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">About Us</a>
+              </div>
+            </div>
+          </li>
+          <li>
+            <a href="./services.html" class="custom-cursor block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Services</a>
+          </li>
+          <li>
+            <a href="./pricing.html" class="custom-cursor block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Pricing</a>
+          </li>
+          <li>
+            <a href="./contact.html" class="custom-cursor block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</a>
+          </li>
+          <li>
+            <a href="https://github.com/kartavyaantani" class="custom-cursor ml-4 bg-primary-light dark:bg-primary-dark text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-all duration-300">Get Started</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative py-24 overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent to-lightbg dark:to-darkbg opacity-90"></div>
+      <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 dark:opacity-5"></div>
+    </div>
+    
+    <div class="container mx-auto px-4 relative z-0">
+      <div class="text-center" data-aos="fade-up" data-aos-duration="1000">
+        <h1 class="text-4xl md:text-6xl font-bold text-white dark:text-gray-900 mb-4">About <span class="gradient-text bg-gradient-to-r from-primary-light to-secondary-light dark:from-primary-dark dark:to-secondary-dark">OsyRix</span></h1>
+        <p class="text-xl text-gray-300 dark:text-gray-700 max-w-2xl mx-auto">
+          Discover our story, our mission, and the team behind the innovation
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Light/Dark Mode Toggle Button -->
+<div class="fixed top-24 right-6 z-50">
+  <button id="theme-toggle" class="bg-gray-800 dark:bg-gray-100 text-white dark:text-gray-800 rounded-full p-3 shadow-lg hover:scale-110 transition-transform duration-300">
+    <svg id="dark-icon" class="w-6 h-6 hidden dark:block" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+    </svg>
+    <svg id="light-icon" class="w-6 h-6 block dark:hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+    </svg>
+  </button>
+</div>
+
+  <!-- Our Story Section -->
+  <section class="py-16 bg-[#0F172A] dark:bg-[#F5F5F5]">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="order-2 lg:order-1" data-aos="fade-right" data-aos-duration="1000">
+          <h2 class="text-3xl md:text-4xl font-bold text-white dark:text-gray-900 mb-6">Our Story</h2>
+          <p class="text-gray-300 dark:text-gray-600 mb-6">
+            Founded in 2015, OsyRix began with a simple idea: create software that makes businesses more efficient and effective. Our founders, Alex Chen and Mia Rodriguez, met while working at a Fortune 500 company and saw firsthand how inefficient software solutions were holding businesses back.
+          </p>
+          <p class="text-gray-300 dark:text-gray-600 mb-6">
+            What started as a small team working out of Alex's garage has grown into a global company with over 200 employees serving clients in more than 50 countries. Through the years, we've remained committed to our core values of innovation, excellence, and customer success.
+          </p>
+          <p class="text-gray-300 dark:text-gray-600">
+            Today, OsyRix is at the forefront of SaaS innovation, combining cutting-edge AI with intuitive design to create solutions that power the world's most ambitious companies.
+          </p>
+        </div>
+        
+        <div class="order-1 lg:order-2 relative" data-aos="fade-left" data-aos-duration="1000">
+          <div class="relative">
+            <div class="absolute -top-6 -left-6 w-24 h-24 bg-primary-light dark:bg-primary-dark rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-pulse-slow"></div>
+            <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-secondary-light dark:bg-secondary-dark rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-pulse-slow"></div>
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Our Team Working" class="rounded-xl shadow-lg w-full h-auto relative z-10">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission & Vision Section -->
+  <section class="py-16 bg-gradient-to-b from-[#1B263B] to-[#0F172A] dark:from-[#E8E8E8] dark:to-[#F5F5F5]">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <!-- Mission -->
+        <div class="glass-card rounded-xl p-8 transform transition-all duration-500 hover:scale-[1.02]" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
+          <div class="w-16 h-16 bg-primary-light dark:bg-primary-dark text-white rounded-lg flex items-center justify-center mb-6">
+            <i class="fas fa-bullseye text-2xl"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-white dark:text-gray-900 mb-4">Our Mission</h3>
+          <p class="text-gray-300 dark:text-gray-600 mb-6">
+            To empower businesses of all sizes with innovative software solutions that drive efficiency, growth, and competitive advantage. We believe that every organization deserves access to enterprise-grade technology that's intuitive, reliable, and transformative.
+          </p>
+          <p class="text-gray-300 dark:text-gray-600">
+            We're committed to continuous innovation, ensuring our clients stay ahead in an ever-evolving digital landscape.
+          </p>
+        </div>
+        
+        <!-- Vision -->
+        <div class="glass-card rounded-xl p-8 transform transition-all duration-500 hover:scale-[1.02]" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+          <div class="w-16 h-16 bg-secondary-light dark:bg-secondary-dark text-white rounded-lg flex items-center justify-center mb-6">
+            <i class="fas fa-binoculars text-2xl"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-white dark:text-gray-900 mb-4">Our Vision</h3>
+          <p class="text-gray-300 dark:text-gray-600 mb-6">
+            To create a future where technology seamlessly enhances human potential. We envision a world where businesses can focus on what they do best, while our solutions handle the rest.
+          </p>
+          <p class="text-gray-300 dark:text-gray-600">
+            By 2030, we aim to have our technology powering over 1 million businesses worldwide, making enterprise operations more efficient, sustainable, and impactful.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Company Timeline -->
+  <section class="py-16 bg-[#0F172A] dark:bg-[#F5F5F5]">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16" data-aos="fade-up" data-aos-duration="1000">
+        <h2 class="text-3xl md:text-4xl font-bold text-white dark:text-gray-900 mb-4">Our Journey</h2>
+        <p class="text-xl text-gray-300 dark:text-gray-600 max-w-2xl mx-auto">
+          From humble beginnings to industry leadership
+        </p>
+      </div>
+      
+      <div class="max-w-4xl mx-auto">
+        <!-- Timeline -->
+        <div class="space-y-12 pl-10">
+          <!-- 2015 -->
+          <div class="timeline-item pb-8" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
+            <div class="timeline-circle"></div>
+            <div class="bg-[#1E293B] dark:bg-white p-6 rounded-xl shadow-lg ml-4">
+              <h3 class="font-bold text-2xl text-white dark:text-gray-900 mb-2">2015</h3>
+              <p class="text-gray-300 dark:text-gray-600">
+                OsyRix was founded by Alex Chen and Mia Rodriguez in Silicon Valley. The first prototype of our core platform was developed with just 5 team members.
+              </p>
+            </div>
+          </div>
+          
+          <!-- 2017 -->
+          <div class="timeline-item pb-8" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+            <div class="timeline-circle"></div>
+            <div class="bg-[#1E293B] dark:bg-white p-6 rounded-xl shadow-lg ml-4">
+              <h3 class="font-bold text-2xl text-white dark:text-gray-900 mb-2">2017</h3>
+              <p class="text-gray-300 dark:text-gray-600">
+                Secured $5M in Series A funding. Released our first major product, OsyRix Core, and expanded the team to 25 employees. Opened our first international office in London.
+              </p>
+            </div>
+          </div>
+          
+          <!-- 2019 -->
+          <div class="timeline-item pb-8" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
+            <div class="timeline-circle"></div>
+            <div class="bg-[#1E293B] dark:bg-white p-6 rounded-xl shadow-lg ml-4">
+              <h3 class="font-bold text-2xl text-white dark:text-gray-900 mb-2">2019</h3>
+              <p class="text-gray-300 dark:text-gray-600">
+                Reached 100 employees and 500 clients worldwide. Launched OsyRix Analytics with industry-first AI capabilities. Awarded "Most Innovative SaaS Solution" at the Global Tech Awards.
+              </p>
+            </div>
+          </div>
+          
+          <!-- 2021 -->
+          <div class="timeline-item pb-8" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+            <div class="timeline-circle"></div>
+            <div class="bg-[#1E293B] dark:bg-white p-6 rounded-xl shadow-lg ml-4">
+              <h3 class="font-bold text-2xl text-white dark:text-gray-900 mb-2">2021</h3>
+              <p class="text-gray-300 dark:text-gray-600">
+                Secured $30M in Series B funding. Expanded to over 150 employees serving clients in 30+ countries. Launched our mobile application suite.
+              </p>
+            </div>
+          </div>
+          
+          <!-- 2023 -->
+          <div class="timeline-item" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500">
+            <div class="timeline-circle"></div>
+            <div class="bg-[#1E293B] dark:bg-white p-6 rounded-xl shadow-lg ml-4">
+              <h3 class="font-bold text-2xl text-white dark:text-gray-900 mb-2">2023</h3>
+              <p class="text-gray-300 dark:text-gray-600">
+                Celebrated reaching 1000+ clients and 200+ employees globally. Opened offices in Singapore and Sydney. Introduced groundbreaking AI-powered workflow automation features.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values Section -->
+  <section class="py-16 bg-gradient-to-r from-[#1B263B] to-[#0F172A] dark:from-[#E8E8E8] dark:to-[#F5F5F5]">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16" data-aos="fade-up" data-aos-duration="1000">
+        <h2 class="text-3xl md:text-4xl font-bold text-white dark:text-gray-900 mb-4">Our Core Values</h2>
+        <p class="text-xl text-gray-300 dark:text-gray-600 max-w-2xl mx-auto">
+          The principles that guide everything we do
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Value 1 -->
+        <div class="bg-[#1E293B] dark:bg-white p-8 rounded-xl shadow-lg transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
+          <div class="w-16 h-16 bg-primary-light dark:bg-primary-dark text-white rounded-lg flex items-center justify-center mb-6 transition-all duration-500 hover:rotate-12">
+            <i class="fas fa-lightbulb text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white dark:text-gray-900 mb-3">Innovation</h3>
+          <p class="text-gray-300 dark:text-gray-600">
+            We challenge conventional thinking and constantly seek new ways to solve complex problems. Innovation is in our DNA and drives everything we do.
+          </p>
+        </div>
+        
+        <!-- Value 2 -->
+        <div class="bg-[#1E293B] dark:bg-white p-8 rounded-xl shadow-lg transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+          <div class="w-16 h-16 bg-secondary-light dark:bg-secondary-dark text-white rounded-lg flex items-center justify-center mb-6 transition-all duration-500 hover:rotate-12">
+            <i class="fas fa-users text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white dark:text-gray-900 mb-3">Customer Success</h3>
+          <p class="text-gray-300 dark:text-gray-600">
+            We measure our success by our customers' success. Their goals become our goals, and we're committed to helping them achieve extraordinary results.
+          </p>
+        </div>
+        
+        <!-- Value 3 -->
+        <div class="bg-[#1E293B] dark:bg-white p-8 rounded-xl shadow-lg transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
+          <div class="w-16 h-16 bg-purple-500 text-white rounded-lg flex items-center justify-center mb-6 transition-all duration-500 hover:rotate-12">
+            <i class="fas fa-award text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white dark:text-gray-900 mb-3">Excellence</h3>
+          <p class="text-gray-300 dark:text-gray-600">
+            We pursue excellence in everything we do, from code quality to customer interactions. Good enough is never enough for us.
+          </p>
+        </div>
+        
+        <!-- Value 4 -->
+        <div class="bg-[#1E293B] dark:bg-white p-8 rounded-xl shadow-lg transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+          <div class="w-16 h-16 bg-yellow-500 text-white rounded-lg flex items-center justify-center mb-6 transition-all duration-500 hover:rotate-12">
+            <i class="fas fa-globe text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white dark:text-gray-900 mb-3">Diversity & Inclusion</h3>
+          <p class="text-gray-300 dark:text-gray-600">
+            We believe diverse perspectives lead to better outcomes. We create an inclusive environment where everyone feels valued and empowered to contribute.
+          </p>
+        </div>
+        
+        <!-- Value 5 -->
+        <div class="bg-[#1E293B] dark:bg-white p-8 rounded-xl shadow-lg transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500">
+          <div class="w-16 h-16 bg-pink-500 text-white rounded-lg flex items-center justify-center mb-6 transition-all duration-500 hover:rotate-12">
+            <i class="fas fa-shield-alt text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white dark:text-gray-900 mb-3">Trust & Security</h3>
+          <p class="text-gray-300 dark:text-gray-600">
+            We prioritize the security and privacy of our clients' data. Building trust is fundamental to our business relationships.
+          </p>
+        </div>
+        
+        <!-- Value 6 -->
+        <div class="bg-[#1E293B] dark:bg-white p-8 rounded-xl shadow-lg transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
+          <div class="w-16 h-16 bg-blue-500 text-white rounded-lg flex items-center justify-center mb-6 transition-all duration-500 hover:rotate-12">
+            <i class="fas fa-seedling text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white dark:text-gray-900 mb-3">Sustainability</h3>
+          <p class="text-gray-300 dark:text-gray-600">
+            We're committed to sustainable practices, both in our operations and the solutions we build for our clients, ensuring a positive impact on the environment.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Numbers and Impact -->
+  <section class="py-16 bg-[#0F172A] dark:bg-[#F5F5F5]">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16" data-aos="fade-up" data-aos-duration="1000">
+        <h2 class="text-3xl md:text-4xl font-bold text-white dark:text-gray-900 mb-4">Our Impact</h2>
+        <p class="text-xl text-gray-300 dark:text-gray-600 max-w-2xl mx-auto">
+          Making a difference through technology
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <!-- Stat 1 -->
+        <div class="bg-[#1E293B] dark:bg-white p-6 rounded-xl shadow-lg text-center transform transition-all duration-300 hover:scale-[1.05]" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
+          <div class="text-4xl md:text-5xl font-bold text-white dark:text-gray-900 mb-2">1000+</div>
+          <div class="text-gray-300 dark:text-gray-600">Clients Worldwide</div>
+        </div>
+        
+        <!-- Stat 2 -->
+        <div class="bg-[#1E293B] dark:bg-white p-6 rounded-xl shadow-lg text-center transform transition-all duration-300 hover:scale-[1.05]" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+          <div class="text-4xl md:text-5xl font-bold text-white dark:text-gray-900 mb-2">200+</div>
+          <div class="text-gray-300 dark:text-gray-600">Team Members</div>
+        </div>
+        
+        <!-- Stat 3 -->
+        <div class="bg-[#1E293B] dark:bg-white p-6 rounded-xl shadow-lg text-center transform transition-all duration-300 hover:scale-[1.05]" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
+          <div class="text-4xl md:text-5xl font-bold text-white dark:text-gray-900 mb-2">50+</div>
+          <div class="text-gray-300 dark:text-gray-600">Countries Served</div>
+        </div>
+        
+        <!-- Stat 4 -->
+        <div class="bg-[#1E293B] dark:bg-white p-6 rounded-xl shadow-lg text-center transform transition-all duration-300 hover:scale-[1.05]" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+          <div class="text-4xl md:text-5xl font-bold text-white dark:text-gray-900 mb-2">30+</div>
+          <div class="text-gray-300 dark:text-gray-600">Industry Awards</div>
+        </div>
+      </div>
+      
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Impact 1 -->
+        <div class="bg-[#1E293B] dark:bg-white p-8 rounded-xl shadow-lg" data-aos="fade-right" data-aos-duration="1000">
+          <h3 class="text-2xl font-bold text-white dark:text-gray-900 mb-4">Environmental Impact</h3>
+          <p class="text-gray-300 dark:text-gray-600 mb-4">
+            Our cloud solutions have helped clients reduce their carbon footprint by an average of 30%. By optimizing resource usage and promoting paperless operations, we've contributed to saving over 50,000 trees annually.
+          </p>
+          <div class="flex items-center">
+            <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mr-4">
+              <i class="fas fa-leaf text-white text-xl"></i>
+            </div>
+            <div>
+              <p class="font-bold text-white dark:text-gray-900">Carbon Neutral Operations</p>
+              <p class="text-gray-300 dark:text-gray-600">Since 2020</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Impact 2 -->
+        <div class="bg-[#1E293B] dark:bg-white p-8 rounded-xl shadow-lg" data-aos="fade-left" data-aos-duration="1000">
+          <h3 class="text-2xl font-bold text-white dark:text-gray-900 mb-4">Social Responsibility</h3>
+          <p class="text-gray-300 dark:text-gray-600 mb-4">
+            Through our OsyRix Gives Back program, we've donated software and services worth over $5 million to non-profits worldwide. We also provide technical training to underrepresented communities through our partnership with global education initiatives.
+          </p>
+          <div class="flex items-center">
+            <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mr-4">
+              <i class="fas fa-hands-helping text-white text-xl"></i>
+            </div>
+            <div>
+              <p class="font-bold text-white dark:text-gray-900">5,000+ Hours</p>
+              <p class="text-gray-300 dark:text-gray-600">Volunteer work annually</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-12 bg-gradient-to-r from-primary-light to-secondary-light dark:from-primary-dark dark:to-secondary-dark">
+    <div class="container mx-auto px-4 text-center" data-aos="fade-up" data-aos-duration="1000">
+      <h2 class="text-3xl font-bold text-white mb-6">Ready to Join Our Journey?</h2>
+      <p class="text-xl text-white/90 mb-8 max-w-3xl mx-auto">
+        Be part of a community that's transforming how businesses operate.
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="contact.html" class="bg-white hover:bg-white/90 text-primary-light dark:text-primary-dark font-semibold py-3 px-8 rounded-lg transition-all duration-300">
+          Contact Us
+        </a>
+        <a href="our-team.html" class="bg-transparent hover:bg-white/10 border-2 border-white text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300">
+          Meet Our Team
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-[#0F172A] dark:bg-[#1A1A1A] py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+        <div>
+          <a href="#" class="flex items-center mb-6">
+            <img src="./assets/logo.png" class="h-8 mr-3" alt="Footer Logo">
+            <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">OsyRix</span>
+          </a>
+          <p class="text-gray-400 mb-4">
+            Empowering businesses with cutting-edge SaaS solutions since 2015.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+              <i class="fab fa-twitter text-xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+              <i class="fab fa-linkedin text-xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+              <i class="fab fa-facebook text-xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+              <i class="fab fa-instagram text-xl"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-white font-semibold text-lg mb-4">Solutions</h3>
+          <ul class="space-y-2">
+            <li><a href="services.html" class="text-gray-400 hover:text-white transition-colors duration-300">Business Automation</a></li>
+            <li><a href="services.html" class="text-gray-400 hover:text-white transition-colors duration-300">Data Analytics</a></li>
+            <li><a href="services.html" class="text-gray-400 hover:text-white transition-colors duration-300">AI Integration</a></li>
+            <li><a href="services.html" class="text-gray-400 hover:text-white transition-colors duration-300">Cloud Solutions</a></li>
+            <li><a href="services.html" class="text-gray-400 hover:text-white transition-colors duration-300">Custom Development</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-white font-semibold text-lg mb-4">Company</h3>
+          <ul class="space-y-2">
+            <li><a href="about-us.html" class="text-gray-400 hover:text-white transition-colors duration-300">About Us</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Careers</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Blog</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Press</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Partners</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-white font-semibold text-lg mb-4">Resources</h3>
+          <ul class="space-y-2">
+            <li><a href="contact.html" class="text-gray-400 hover:text-white transition-colors duration-300">Contact Us</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Documentation</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">API Reference</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Help Center</a></li>
+            <li><a href="pricing.html" class="text-gray-400 hover:text-white transition-colors duration-300">Pricing</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 pt-8 mt-8 text-center text-gray-400">
+        <p>© 2025 OsyRix. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Initialize AOS animations
+    document.addEventListener('DOMContentLoaded', function() {
+      AOS.init();
+      
+      // Theme Toggle
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      
+      // Check for dark mode preference
+      if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      
+      // Toggle dark mode on button click
+      themeToggleBtn.addEventListener('click', function() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('color-theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('color-theme', 'dark');
+        }
+      });
+      
+      // FAQ toggle functionality
+      const faqQuestions = document.querySelectorAll('.faq-question');
+      
+      faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+          const answer = question.nextElementSibling;
+          const icon = question.querySelector('i');
+          
+          answer.classList.toggle('hidden');
+          icon.classList.toggle('rotate-180');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

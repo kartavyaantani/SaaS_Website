@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="./tailwind.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OsyRix</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- NAVBAR JS CDN -->
+  <script src="Navbar.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            lightbg: '#0d1b2a',
+            darkbg: '#FEFFEA',
+            darkgreen: {
+              500: '#1B5E20',
+              600: '#0D4D14'
+            },
+            primary: {
+              light: '#3b82f6',
+              dark: '#2563eb'
+            },
+            secondary: {
+              light: '#10b981',
+              dark: '#059669'
+            }
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'float-reverse': 'float-reverse 5s ease-in-out infinite',
+            'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-20px)' }
+            },
+            'float-reverse': {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(20px)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    canvas {
+      display: block;
+    }
+
+    .glass-heading {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .dark .glass-heading {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    @media (hover: none) {
+      .glass-heading {
+        background: rgba(255, 255, 255, 0.7);
+      }
+      .dark .glass-heading {
+        background: rgba(0, 0, 0, 0.7);
+      }
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .feature-card:hover .feature-icon {
+      transform: rotateY(180deg) scale(1.1);
+    }
+
+    .testimonial-card {
+      transition: all 0.3s ease;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .dark .testimonial-card:hover {
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .pricing-card {
+      transition: all 0.3s ease;
+    }
+
+    .pricing-card:hover {
+      transform: scale(1.03);
+    }
+
+    .pricing-card.popular {
+      border: 2px solid;
+      border-color: var(--tw-gradient-to);
+    }
+
+    .gradient-text {
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .gradient-bg {
+      background-size: 200% 200%;
+      animation: gradient 15s ease infinite;
+    }
+
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+  </style>
+</head>
+<body class="bg-lightbg dark:bg-darkbg custom-cursor h-full m-0 p-0">
+
+ <!-- Navbar -->
+  <nav class="bg-white border-gray-200 dark:bg-[#0F0606] dark:border-gray-700 rounded-3xl">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <img src="./assets/logo.png" class="h-8" alt="Main Logo" />
+        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">OsyRix</span>
+      </a>
+      <button data-collapse-toggle="navbar-multi-level" type="button" class="custom-cursor inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-multi-level" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+        </svg>
+      </button>
+      <div class="hidden w-full md:block md:w-auto " id="navbar-multi-level">
+        <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-[#0F0606] md:dark:bg-[#0F0606] dark:border-gray-700">
+          <li>
+            <a href="./homepage.html" class="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-[#0F0606]" aria-current="page">Home</a>
+          </li>
+          <li>
+            <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="custom-cursor flex items-center justify-between w-full py-2 px-3 text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:hover:bg-gray-700 md:dark:hover:bg-transparent ">More <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+            </svg></button>
+            <!-- Dropdown menu -->
+            <div id="dropdownNavbar" class="custom-cursor z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600 ">
+              <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownLargeButton">
+                <li>
+                  <a href="./projects.html" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Projects</a>
+                </li>
+                <li aria-labelledby="dropdownNavbarLink">
+                  <button id="doubleDropdownButton" data-dropdown-toggle="doubleDropdown" data-dropdown-placement="right-start" type="button" class="custom-cursor flex items-center justify-between w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Company<svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                  </svg></button>
+                  <div id="doubleDropdown" class="custom-cursor z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700">
+                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="doubleDropdownButton">
+                      <li>
+                        <a href="./technologies.html" class="custom-cursor block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Technologies</a>
+                      </li>
+                      <li>
+                        <a href="./billing.html" class="custom-cursor block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Billing</a>
+                      </li>
+                      <li>
+                        <a href="./team.html" class="custom-cursor block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Our Team</a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+              <div class="py-1">
+                <a href="./about-us.html" class="custom-cursor block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">About Us</a>
+              </div>
+            </div>
+          </li>
+          <li>
+            <a href="./services.html" class="custom-cursor block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Services</a>
+          </li>
+          <li>
+            <a href="./pricing.html" class="custom-cursor block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Pricing</a>
+          </li>
+          <li>
+            <a href="./contact.html" class="custom-cursor block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</a>
+          </li>
+          <li>
+            <a href="https://github.com/kartavyaantani" class="custom-cursor ml-4 bg-primary-light dark:bg-primary-dark text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-all duration-300">Get Started</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<!--Welcome Screen-->
+
+<main class="container mx-auto px-4 py-12 md:py-20">
+  <!-- Bento Grid Container -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <!-- Grid Item 1 -->
+  <div class="bg-[#1B263B] dark:bg-[#0F0606] glass-heading rounded-2xl  transition-all duration-500 transform hover:scale-[1.02] hover:shadow-xl overflow-hidden relative group col-span-1 row-span-1 md:col-span-2 md:row-span-2 h-64 md:h-auto">
+    
+  <!-- Spline Viewer Container -->
+  <div class="relative w-full h-full">
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.98/build/spline-viewer.js"></script>
+    <spline-viewer 
+      url="https://prod.spline.design/UiFfbHZMVNwVubQ0/scene.splinecode"
+      style="width:100%;height:100%;position:absolute"
+      camera-target="0,0,0" 
+      camera-position="0,0,1" 
+    ></spline-viewer>
+  </div>
+</div>
+
+<!-- Nuclear Option for Logo Removal -->
+<script>
+(function() {
+  // 1. CSS Injection Approach
+  const injectCSS = () => {
+    const style = document.createElement('style');
+    style.textContent = `
+      spline-viewer::part(logo), 
+      spline-viewer::part(watermark),
+      .spline-watermark,
+      .logo-container,
+      #logo {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+      }
+    `;
+    document.head.appendChild(style);
+  };
+
+  // 2. Direct DOM Mutation Approach
+  const nukeLogo = () => {
+    const viewer = document.querySelector('spline-viewer');
+    if (!viewer) return false;
+
+    // Try multiple access methods
+    const tryRemove = (root) => {
+      const selectors = [
+        '.logo', '#logo', '[part="logo"]', 
+        '.watermark', '[part="watermark"]',
+        '.spline-watermark', '.logo-container'
+      ];
+      
+      selectors.forEach(selector => {
+        const elements = root.querySelectorAll(selector);
+        elements.forEach(el => {
+          el.style.display = 'none';
+          el.style.opacity = '0';
+          el.style.visibility = 'hidden';
+          el.remove();
+        });
+      });
+    };
+
+    // Try shadowRoot first
+    if (viewer.shadowRoot) {
+      tryRemove(viewer.shadowRoot);
+    }
+    
+    // Try traversing all children (for newer versions)
+    viewer.querySelectorAll('*').forEach(el => {
+      if (el.shadowRoot) tryRemove(el.shadowRoot);
+    });
+
+    return true;
+  };
+
+  // 3. Continuous Monitoring
+  const observer = new MutationObserver(() => {
+    if (nukeLogo()) {
+      console.log('Spline logo nuked successfully');
+      observer.disconnect();
+    }
+  });
+
+  // Start the process
+  injectCSS();
+  document.addEventListener('DOMContentLoaded', () => {
+    nukeLogo();
+    observer.observe(document.body, { 
+      childList: true, 
+      subtree: true 
+    });
+    
+    // Final attempt after everything loads
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        nukeLogo();
+        injectCSS();
+      }, 1000);
+    });
+  });
+})();
+</script>
+
+
+
+    <!-- Grid Item 2 -->
+    <div class="bg-[#415A77] dark:bg-[#292929] glass-heading rounded-2xl p-6 md:p-8 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-xl overflow-hidden relative group h-64">
+      <div class="absolute inset-0 bg-gradient-to-br from-green-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      <h3 class="text-xl md:text-2xl font-bold text-white dark:text-white mb-3">Client Focus</h3>
+      <p class="text-gray-200 dark:text-white">Your success is our priority.</p>
+      <div class="absolute bottom-6 right-6">
+        <svg class="w-10 h-10 text-white/20 dark:text-white group-hover:text-white/40 dark:group-hover:text-gray-900/40 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Grid Item 3 -->
+    <div class="bg-[#778DA9] dark:bg-[#3D3D3D] glass-heading rounded-2xl p-6 md:p-8 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-xl overflow-hidden relative group h-64">
+      <div class="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      <h3 class="text-xl md:text-2xl font-bold text-purple-900 dark:text-white mb-3">24/7 Support</h3>
+      <p class="text-purple-900 dark:text-white">Always here when you need us.</p>
+      <div class="absolute bottom-6 right-6">
+        <svg class="w-10 h-10 text-purple-900 dark:text-white group-hover:text-white/40 dark:group-hover:text-gray-900/40 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Grid Item 4 -->
+    <div class=" bg-[#E0E1DD] dark:bg-[#495057] glass-heading rounded-2xl p-6 md:p-8 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-xl overflow-hidden relative group col-span-1 md:col-span-2 h-64">
+      <div class="absolute inset-0 bg-gradient-to-br from-pink-500/10 to-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      <h3 class="text-2xl md:text-3xl font-bold text-black dark:text-white mb-3">Future Ready</h3>
+      <p class="text-black dark:text-white">Preparing your business for tomorrow's challenges.</p>
+      <div class="absolute bottom-6 right-6">
+        <svg class="w-12 h-12 text-text-black dark:text-white group-hover:text-white/40 dark:group-hover:text-gray-900/40 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+        </svg>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+<!-- Hero Section -->
+<section id="home" class="relative overflow-hidden">
+  <div class="absolute inset-0 z-0">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-lightbg dark:to-darkbg opacity-90"></div>
+    <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 dark:opacity-5"></div>
+  </div>
+  
+  <div class="container mx-auto px-4 py-24 md:py-32 relative z-10">
+    <div class="flex flex-col md:flex-row items-center">
+      <div class="md:w-1/2 mb-12 md:mb-0">
+        <h1 class="text-4xl md:text-6xl font-bold text-white dark:text-gray-900 mb-6 leading-tight">
+          Transform Your Business with <span class="gradient-text bg-gradient-to-r from-primary-light to-secondary-light dark:from-primary-dark dark:to-secondary-dark">Highly Customized, Innovative & Scalable</span> Solutions
+        </h1>
+        <p class="text-xl text-gray-300 dark:text-gray-700 mb-8 max-w-lg">
+          OsyRix delivers cutting-edge SaaS solutions that drive efficiency, innovation, and growth for businesses of all sizes.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="#pricing" class="bg-primary-light dark:bg-primary-dark hover:bg-opacity-90 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 text-center">
+            Get Started
+          </a>
+          <a href="#features" class="bg-white/10 dark:bg-black/10 hover:bg-white/20 dark:hover:bg-black/20 border border-white/20 dark:border-black/20 text-white dark:text-gray-900 font-semibold py-3 px-8 rounded-lg transition-all duration-300 text-center">
+            Learn More
+          </a>
+        </div>
+      </div>
+      <div class="md:w-1/2 flex justify-center">
+        <div class="relative w-full max-w-lg">
+          <div class="absolute -top-10 -left-10 w-32 h-32 bg-primary-light dark:bg-primary-dark rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+          <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-secondary-light dark:bg-secondary-dark rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+          <div class="absolute top-0 right-0 w-32 h-32 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+          <div class="relative">
+            <img src="./assets/PEOPLE.png" alt="Hero Illustration" class="w-full h-auto animate-float">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-12 bg-gradient-to-r from-[#1B263B] to-[#415A77] dark:from-[#1A1A1A] dark:to-[#2D2D2D]">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <div class="p-6">
+        <div class="text-4xl md:text-5xl font-bold text-white mb-2">500+</div>
+        <div class="text-gray-300">Happy Clients</div>
+      </div>
+      <div class="p-6">
+        <div class="text-4xl md:text-5xl font-bold text-white mb-2">99.9%</div>
+        <div class="text-gray-300">Uptime</div>
+      </div>
+      <div class="p-6">
+        <div class="text-4xl md:text-5xl font-bold text-white mb-2">24/7</div>
+        <div class="text-gray-300">Support</div>
+      </div>
+      <div class="p-6">
+        <div class="text-4xl md:text-5xl font-bold text-white mb-2">50+</div>
+        <div class="text-gray-300">Countries</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="py-16 bg-[#0F172A] dark:bg-[#F5F5F5]">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-5xl font-bold text-white dark:text-gray-900 mb-4">Powerful Features</h2>
+      <p class="text-xl text-gray-300 dark:text-gray-600 max-w-3xl mx-auto">
+        Designed to streamline your workflow and boost productivity.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Feature 1 -->
+      <div class="feature-card bg-[#1E293B] dark:bg-white p-8 rounded-xl shadow-lg transition-all duration-300">
+        <div class="feature-icon w-16 h-16 bg-primary-light dark:bg-primary-dark text-white rounded-lg flex items-center justify-center mb-6 transition-all duration-500">
+          <i class="fas fa-rocket text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white dark:text-gray-900 mb-3">AI-Powered Automation</h3>
+        <p class="text-gray-300 dark:text-gray-600">
+          Leverage cutting-edge AI to automate repetitive tasks and focus on what really matters for your business.
+        </p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="feature-card bg-[#1E293B] dark:bg-white p-8 rounded-xl shadow-lg transition-all duration-300">
+        <div class="feature-icon w-16 h-16 bg-secondary-light dark:bg-secondary-dark text-white rounded-lg flex items-center justify-center mb-6 transition-all duration-500">
+          <i class="fas fa-chart-line text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white dark:text-gray-900 mb-3">Real-Time Analytics</h3>
+        <p class="text-gray-300 dark:text-gray-600">
+          Get actionable insights with our comprehensive dashboard and reporting tools.
+        </p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="feature-card bg-[#1E293B] dark:bg-white p-8 rounded-xl shadow-lg transition-all duration-300">
+        <div class="feature-icon w-16 h-16 bg-purple-500 text-white rounded-lg flex items-center justify-center mb-6 transition-all duration-500">
+          <i class="fas fa-shield-alt text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white dark:text-gray-900 mb-3">Enterprise Security</h3>
+        <p class="text-gray-300 dark:text-gray-600">
+          Military-grade encryption and security protocols to keep your data safe.
+        </p>
+      </div>
+
+      <!-- Feature 4 -->
+      <div class="feature-card bg-[#1E293B] dark:bg-white p-8 rounded-xl shadow-lg transition-all duration-300">
+        <div class="feature-icon w-16 h-16 bg-yellow-500 text-white rounded-lg flex items-center justify-center mb-6 transition-all duration-500">
+          <i class="fas fa-plug text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white dark:text-gray-900 mb-3">Seamless Integrations</h3>
+        <p class="text-gray-300 dark:text-gray-600">
+          Connect with your favorite tools through our extensive API and native integrations.
+        </p>
+      </div>
+
+      <!-- Feature 5 -->
+      <div class="feature-card bg-[#1E293B] dark:bg-white p-8 rounded-xl shadow-lg transition-all duration-300">
+        <div class="feature-icon w-16 h-16 bg-pink-500 text-white rounded-lg flex items-center justify-center mb-6 transition-all duration-500">
+          <i class="fas fa-mobile-alt text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white dark:text-gray-900 mb-3">Mobile Ready</h3>
+        <p class="text-gray-300 dark:text-gray-600">
+          Full-featured mobile apps to manage your business on the go.
+        </p>
+      </div>
+
+      <!-- Feature 6 -->
+      <div class="feature-card bg-[#1E293B] dark:bg-white p-8 rounded-xl shadow-lg transition-all duration-300">
+        <div class="feature-icon w-16 h-16 bg-blue-500 text-white rounded-lg flex items-center justify-center mb-6 transition-all duration-500">
+          <i class="fas fa-users-cog text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white dark:text-gray-900 mb-3">Customizable Workflows</h3>
+        <p class="text-gray-300 dark:text-gray-600">
+          Tailor the platform to your specific business needs with customizable workflows.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Integrations Section -->
+<section id="integrations" class="py-16 bg-gradient-to-r from-[#1B263B] to-[#0F172A] dark:from-[#2D2D2D] dark:to-[#1A1A1A]">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-5xl font-bold text-white dark:text-white mb-4">Works With Your Favorite Tools</h2>
+      <p class="text-xl text-gray-300 dark:text-gray-300 max-w-3xl mx-auto">
+        Connect OsyRix with the apps you use every day.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
+      <!-- Integration 1 -->
+      <div class="bg-white/10 dark:bg-black/10 rounded-xl p-6 flex items-center justify-center hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-300">
+        <img src="https://logo.clearbit.com/slack.com" alt="Slack" class="h-12 w-12 object-contain grayscale hover:grayscale-0 transition-all duration-300">
+      </div>
+      
+      <!-- Integration 2 -->
+      <div class="bg-white/10 dark:bg-black/10 rounded-xl p-6 flex items-center justify-center hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-300">
+        <img src="https://logo.clearbit.com/salesforce.com" alt="Salesforce" class="h-12 w-12 object-contain grayscale hover:grayscale-0 transition-all duration-300">
+      </div>
+      
+      <!-- Integration 3 -->
+      <div class="bg-white/10 dark:bg-black/10 rounded-xl p-6 flex items-center justify-center hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-300">
+        <img src="https://logo.clearbit.com/zapier.com" alt="Zapier" class="h-12 w-12 object-contain grayscale hover:grayscale-0 transition-all duration-300">
+      </div>
+      
+      <!-- Integration 4 -->
+      <div class="bg-white/10 dark:bg-black/10 rounded-xl p-6 flex items-center justify-center hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-300">
+        <img src="https://logo.clearbit.com/google.com" alt="Google" class="h-12 w-12 object-contain grayscale hover:grayscale-0 transition-all duration-300">
+      </div>
+      
+      <!-- Integration 5 -->
+      <div class="bg-white/10 dark:bg-black/10 rounded-xl p-6 flex items-center justify-center hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-300">
+        <img src="https://logo.clearbit.com/microsoft.com" alt="Microsoft" class="h-12 w-12 object-contain grayscale hover:grayscale-0 transition-all duration-300">
+      </div>
+      
+      <!-- Integration 6 -->
+      <div class="bg-white/10 dark:bg-black/10 rounded-xl p-6 flex items-center justify-center hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-300">
+        <img src="https://logo.clearbit.com/trello.com" alt="Trello" class="h-12 w-12 object-contain grayscale hover:grayscale-0 transition-all duration-300">
+      </div>
+      
+      <!-- Integration 7 -->
+      <div class="bg-white/10 dark:bg-black/10 rounded-xl p-6 flex items-center justify-center hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-300">
+        <img src="https://logo.clearbit.com/quickbooks.intuit.com" alt="QuickBooks" class="h-12 w-12 object-contain grayscale hover:grayscale-0 transition-all duration-300">
+      </div>
+      
+      <!-- Integration 8 -->
+      <div class="bg-white/10 dark:bg-black/10 rounded-xl p-6 flex items-center justify-center hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-300">
+        <img src="https://logo.clearbit.com/hubspot.com" alt="HubSpot" class="h-12 w-12 object-contain grayscale hover:grayscale-0 transition-all duration-300">
+      </div>
+      
+      <!-- Integration 9 -->
+      <div class="bg-white/10 dark:bg-black/10 rounded-xl p-6 flex items-center justify-center hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-300">
+        <img src="https://logo.clearbit.com/mailchimp.com" alt="Mailchimp" class="h-12 w-12 object-contain grayscale hover:grayscale-0 transition-all duration-300">
+      </div>
+      
+      <!-- Integration 10 -->
+      <div class="bg-white/10 dark:bg-black/10 rounded-xl p-6 flex items-center justify-center hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-300">
+        <img src="https://logo.clearbit.com/shopify.com" alt="Shopify" class="h-12 w-12 object-contain grayscale hover:grayscale-0 transition-all duration-300">
+      </div>
+      
+      <!-- Integration 11 -->
+      <div class="bg-white/10 dark:bg-black/10 rounded-xl p-6 flex items-center justify-center hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-300">
+        <img src="https://logo.clearbit.com/zoom.us" alt="Zoom" class="h-12 w-12 object-contain grayscale hover:grayscale-0 transition-all duration-300">
+      </div>
+      
+      <!-- Integration 12 -->
+      <div class="bg-white/10 dark:bg-black/10 rounded-xl p-6 flex items-center justify-center hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-300">
+        <img src="https://logo.clearbit.com/dropbox.com" alt="Dropbox" class="h-12 w-12 object-contain grayscale hover:grayscale-0 transition-all duration-300">
+      </div>
+    </div>
+
+    <div class="text-center mt-12">
+      <a href="#" class="inline-flex items-center text-white dark:text-white font-semibold hover:text-gray-300 dark:hover:text-gray-300 transition-all duration-300">
+        View all integrations
+        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="py-16 bg-[#0F172A] dark:bg-[#F5F5F5]">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-5xl font-bold text-white dark:text-gray-900 mb-4">What Our Clients Say</h2>
+      <p class="text-xl text-gray-300 dark:text-gray-600 max-w-3xl mx-auto">
+        Don't just take our word for it. Here's what our customers have to say.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Testimonial 1 -->
+      <div class="testimonial-card bg-[#1E293B] dark:bg-white p-8 rounded-xl shadow-lg">
+        <div class="flex items-center mb-6">
+          <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah Johnson" class="w-12 h-12 rounded-full mr-4">
+          <div>
+            <h4 class="font-bold text-white dark:text-gray-900">Sarah Johnson</h4>
+            <p class="text-gray-400 dark:text-gray-600">CEO, TechSolutions</p>
+          </div>
+        </div>
+        <p class="text-gray-300 dark:text-gray-600 italic mb-6">
+          "OsyRix has transformed how we manage our operations. The automation features alone have saved us hundreds of hours each month."
+        </p>
+        <div class="flex text-yellow-400">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
+      </div>
+
+      <!-- Testimonial 2 -->
+      <div class="testimonial-card bg-[#1E293B] dark:bg-white p-8 rounded-xl shadow-lg">
+        <div class="flex items-center mb-6">
+          <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Michael Chen" class="w-12 h-12 rounded-full mr-4">
+          <div>
+            <h4 class="font-bold text-white dark:text-gray-900">Michael Chen</h4>
+            <p class="text-gray-400 dark:text-gray-600">CTO, InnovateX</p>
+          </div>
+        </div>
+        <p class="text-gray-300 dark:text-gray-600 italic mb-6">
+          "The analytics dashboard provides insights we never had before. It's like having an entire data science team at our fingertips."
+        </p>
+        <div class="flex text-yellow-400">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star-half-alt"></i>
+        </div>
+      </div>
+
+      <!-- Testimonial 3 -->
+      <div class="testimonial-card bg-[#1E293B] dark:bg-white p-8 rounded-xl shadow-lg">
+        <div class="flex items-center mb-6">
+          <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emma Rodriguez" class="w-12 h-12 rounded-full mr-4">
+          <div>
+            <h4 class="font-bold text-white dark:text-gray-900">Emma Rodriguez</h4>
+            <p class="text-gray-400 dark:text-gray-600">Director, Global Logistics</p>
+          </div>
+        </div>
+        <p class="text-gray-300 dark:text-gray-600 italic mb-6">
+          "Implementation was seamless and the support team is phenomenal. We've seen a 30% increase in efficiency since switching to OsyRix."
+        </p>
+        <div class="flex text-yellow-400">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing Section -->
+<section id="pricing" class="py-16 bg-gradient-to-b from-[#1B263B] to-[#0F172A] dark:from-[#2D2D2D] dark:to-[#1A1A1A]">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-5xl font-bold text-white dark:text-white mb-4">Simple, Transparent Pricing</h2>
+      <p class="text-xl text-gray-300 dark:text-gray-300 max-w-3xl mx-auto">
+        Choose the plan that fits your needs. No hidden fees, no surprises.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+      <!-- Basic Plan -->
+      <div class="pricing-card bg-[#1E293B] dark:bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="p-8">
+          <h3 class="text-2xl font-bold text-white dark:text-gray-900 mb-2">Starter</h3>
+          <p class="text-gray-300 dark:text-gray-600 mb-6">Perfect for small teams and startups</p>
+          <div class="mb-6">
+            <span class="text-4xl font-bold text-white dark:text-gray-900">$29</span>
+            <span class="text-gray-300 dark:text-gray-600">/month</span>
+          </div>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-center text-gray-300 dark:text-gray-600">
+              <i class="fas fa-check text-green-500 mr-2"></i>
+              <span>Up to 10 users</span>
+            </li>
+            <li class="flex items-center text-gray-300 dark:text-gray-600">
+              <i class="fas fa-check text-green-500 mr-2"></i>
+              <span>Basic automation</span>
+            </li>
+            <li class="flex items-center text-gray-300 dark:text-gray-600">
+              <i class="fas fa-check text-green-500 mr-2"></i>
+              <span>Standard reporting</span>
+            </li>
+            <li class="flex items-center text-gray-300 dark:text-gray-600">
+              <i class="fas fa-check text-green-500 mr-2"></i>
+              <span>Email support</span>
+            </li>
+          </ul>
+          <a href="#" class="block w-full bg-white/10 dark:bg-black/10 hover:bg-white/20 dark:hover:bg-black/20 text-white dark:text-gray-900 font-semibold py-3 px-4 rounded-lg text-center transition-all duration-300">
+            Get Started
+          </a>
+        </div>
+      </div>
+
+      <!-- Popular Plan -->
+      <div class="pricing-card popular bg-gradient-to-br from-primary-light to-secondary-light dark:from-primary-dark dark:to-secondary-dark rounded-xl shadow-lg overflow-hidden transform scale-105 z-10">
+        <div class="p-8">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="text-2xl font-bold text-white mb-2">Professional</h3>
+            <span class="bg-white text-primary-light dark:text-primary-dark text-xs font-bold px-3 py-1 rounded-full">MOST POPULAR</span>
+          </div>
+          <p class="text-white/80 mb-6">Ideal for growing businesses</p>
+          <div class="mb-6">
+            <span class="text-4xl font-bold text-white">$99</span>
+            <span class="text-white/80">/month</span>
+          </div>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-center text-white/90">
+              <i class="fas fa-check text-white mr-2"></i>
+              <span>Up to 50 users</span>
+            </li>
+            <li class="flex items-center text-white/90">
+              <i class="fas fa-check text-white mr-2"></i>
+              <span>Advanced automation</span>
+            </li>
+            <li class="flex items-center text-white/90">
+              <i class="fas fa-check text-white mr-2"></i>
+              <span>Custom reporting</span>
+            </li>
+            <li class="flex items-center text-white/90">
+              <i class="fas fa-check text-white mr-2"></i>
+              <span>Priority support</span>
+            </li>
+            <li class="flex items-center text-white/90">
+              <i class="fas fa-check text-white mr-2"></i>
+              <span>API access</span>
+            </li>
+          </ul>
+          <a href="#" class="block w-full bg-white hover:bg-white/90 text-primary-light dark:text-primary-dark font-semibold py-3 px-4 rounded-lg text-center transition-all duration-300">
+            Get Started
+          </a>
+        </div>
+      </div>
+
+      <!-- Enterprise Plan -->
+      <div class="pricing-card bg-[#1E293B] dark:bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="p-8">
+          <h3 class="text-2xl font-bold text-white dark:text-gray-900 mb-2">Enterprise</h3>
+          <p class="text-gray-300 dark:text-gray-600 mb-6">For large organizations</p>
+          <div class="mb-6">
+            <span class="text-4xl font-bold text-white dark:text-gray-900">Custom</span>
+          </div>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-center text-gray-300 dark:text-gray-600">
+              <i class="fas fa-check text-green-500 mr-2"></i>
+              <span>Unlimited users</span>
+            </li>
+            <li class="flex items-center text-gray-300 dark:text-gray-600">
+              <i class="fas fa-check text-green-500 mr-2"></i>
+              <span>Premium automation</span>
+            </li>
+            <li class="flex items-center text-gray-300 dark:text-gray-600">
+              <i class="fas fa-check text-green-500 mr-2"></i>
+              <span>Advanced analytics</span>
+            </li>
+            <li class="flex items-center text-gray-300 dark:text-gray-600">
+              <i class="fas fa-check text-green-500 mr-2"></i>
+              <span>24/7 dedicated support</span>
+            </li>
+            <li class="flex items-center text-gray-300 dark:text-gray-600">
+              <i class="fas fa-check text-green-500 mr-2"></i>
+              <span>Custom integrations</span>
+            </li>
+          </ul>
+          <a href="#" class="block w-full bg-white/10 dark:bg-black/10 hover:bg-white/20 dark:hover:bg-black/20 text-white dark:text-gray-900 font-semibold py-3 px-4 rounded-lg text-center transition-all duration-300">
+            Contact Sales
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-12">
+      <p class="text-gray-300 dark:text-gray-300">
+        Need something different? <a href="#" class="text-primary-light dark:text-primary-dark font-semibold hover:underline">Contact us</a> for custom solutions.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-16 bg-[#0F172A] dark:bg-[#F5F5F5]">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-5xl font-bold text-white dark:text-gray-900 mb-4">Frequently Asked Questions</h2>
+      <p class="text-xl text-gray-300 dark:text-gray-600 max-w-3xl mx-auto">
+        Get answers to common questions about OsyRix.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mx-auto">
+      <!-- FAQ Item 1 -->
+      <div class="mb-4 border-b border-gray-700 dark:border-gray-300 pb-4">
+        <button class="faq-question flex justify-between items-center w-full text-left text-white dark:text-gray-900 font-semibold py-2 focus:outline-none">
+          <span>What makes OsyRix different from other SaaS solutions?</span>
+          <i class="fas fa-chevron-down transition-transform duration-300"></i>
+        </button>
+        <div class="faq-answer mt-2 text-gray-300 dark:text-gray-600 hidden">
+          OsyRix combines cutting-edge AI with an intuitive interface, offering enterprise-grade features at competitive prices. Our platform is built with scalability in mind, ensuring it grows with your business while maintaining exceptional performance.
+        </div>
+      </div>
+
+      <!-- FAQ Item 2 -->
+      <div class="mb-4 border-b border-gray-700 dark:border-gray-300 pb-4">
+        <button class="faq-question flex justify-between items-center w-full text-left text-white dark:text-gray-900 font-semibold py-2 focus:outline-none">
+          <span>How long does implementation typically take?</span>
+          <i class="fas fa-chevron-down transition-transform duration-300"></i>
+        </button>
+        <div class="faq-answer mt-2 text-gray-300 dark:text-gray-600 hidden">
+          Most customers are up and running within 1-2 weeks. Our implementation team works closely with you to ensure a smooth transition, with minimal disruption to your operations. We offer comprehensive onboarding and training to get your team productive quickly.
+        </div>
+      </div>
+
+      <!-- FAQ Item 3 -->
+      <div class="mb-4 border-b border-gray-700 dark:border-gray-300 pb-4">
+        <button class="faq-question flex justify-between items-center w-full text-left text-white dark:text-gray-900 font-semibold py-2 focus:outline-none">
+          <span>What kind of support do you offer?</span>
+          <i class="fas fa-chevron-down transition-transform duration-300"></i>
+        </button>
+        <div class="faq-answer mt-2 text-gray-300 dark:text-gray-600 hidden">
+          All plans include email support with response times under 24 hours. Professional and Enterprise plans include priority phone and chat support. We also offer extensive documentation, video tutorials, and a knowledge base to help you get the most from our platform.
+        </div>
+      </div>
+
+      <!-- FAQ Item 4 -->
+      <div class="mb-4 border-b border-gray-700 dark:border-gray-300 pb-4">
+        <button class="faq-question flex justify-between items-center w-full text-left text-white dark:text-gray-900 font-semibold py-2 focus:outline-none">
+          <span>Is my data secure with OsyRix?</span>
+          <i class="fas fa-chevron-down transition-transform duration-300"></i>
+        </button>
+        <div class="faq-answer mt-2 text-gray-300 dark:text-gray-600 hidden">
+          Absolutely. We use industry-leading encryption both in transit and at rest, conduct regular security audits, and maintain SOC 2 Type II compliance. Our infrastructure is hosted on secure cloud platforms with redundant backups and disaster recovery protocols.
+        </div>
+      </div>
+
+      <!-- FAQ Item 5 -->
+      <div class="mb-4 border-b border-gray-700 dark:border-gray-300 pb-4">
+        <button class="faq-question flex justify-between items-center w-full text-left text-white dark:text-gray-900 font-semibold py-2 focus:outline-none">
+          <span>Can I cancel or change my plan at any time?</span>
+          <i class="fas fa-chevron-down transition-transform duration-300"></i>
+        </button>
+        <div class="faq-answer mt-2 text-gray-300 dark:text-gray-600 hidden">
+          Yes, you can upgrade, downgrade, or cancel your subscription at any time with no hidden fees or penalties. We believe in providing flexibility to our customers as their business needs evolve.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-16 bg-gradient-to-r from-primary-light to-secondary-light dark:from-primary-dark dark:to-secondary-dark">
+  <div class="container mx-auto px-4 text-center">
+    <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">Ready to Transform Your Business?</h2>
+    <p class="text-xl text-white/90 mb-8 max-w-3xl mx-auto">
+      Join thousands of businesses already using OsyRix to streamline their operations and drive growth.
+    </p>
+    <div class="flex flex-col sm:flex-row justify-center gap-4">
+      <a href="#pricing" class="bg-white hover:bg-white/90 text-primary-light dark:text-primary-dark font-semibold py-3 px-8 rounded-lg transition-all duration-300">
+        Get Started
+      </a>
+      <a href="#contact" class="bg-transparent hover:bg-white/10 border-2 border-white text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300">
+        Contact Sales
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-16 bg-[#0F172A] dark:bg-[#F5F5F5]">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <h2 class="text-3xl md:text-5xl font-bold text-white dark:text-gray-900 mb-6">Get In Touch</h2>
+        <p class="text-xl text-gray-300 dark:text-gray-600 mb-8">
+          Have questions or want to learn more? Our team is here to help.
+        </p>
+        
+        <div class="space-y-6">
+          <div class="flex items-start">
+            <div class="bg-primary-light dark:bg-primary-dark text-white p-3 rounded-lg mr-4">
+              <i class="fas fa-map-marker-alt text-lg"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-white dark:text-gray-900 mb-1">Our Office</h4>
+              <p class="text-gray-300 dark:text-gray-600">123 Tech Park, Silicon Valley, CA 94025</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start">
+            <div class="bg-primary-light dark:bg-primary-dark text-white p-3 rounded-lg mr-4">
+              <i class="fas fa-envelope text-lg"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-white dark:text-gray-900 mb-1">Email Us</h4>
+              <p class="text-gray-300 dark:text-gray-600">info@OsyRixtech.com</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start">
+            <div class="bg-primary-light dark:bg-primary-dark text-white p-3 rounded-lg mr-4">
+              <i class="fas fa-phone-alt text-lg"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-white dark:text-gray-900 mb-1">Call Us</h4>
+              <p class="text-gray-300 dark:text-gray-600">+1 (555) 123-4567</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-[#1E293B] dark:bg-white p-8 rounded-xl shadow-lg">
+        <form>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <label for="name" class="block text-gray-300 dark:text-gray-600 mb-2">Name</label>
+              <input type="text" id="name" class="w-full bg-[#0F172A] dark:bg-gray-100 border border-gray-600 dark:border-gray-300 rounded-lg py-3 px-4 text-white dark:text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark">
+            </div>
+            <div>
+              <label for="email" class="block text-gray-300 dark:text-gray-600 mb-2">Email</label>
+              <input type="email" id="email" class="w-full bg-[#0F172A] dark:bg-gray-100 border border-gray-600 dark:border-gray-300 rounded-lg py-3 px-4 text-white dark:text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark">
+            </div>
+          </div>
+          <div class="mb-6">
+            <label for="subject" class="block text-gray-300 dark:text-gray-600 mb-2">Subject</label>
+            <input type="text" id="subject" class="w-full bg-[#0F172A] dark:bg-gray-100 border border-gray-600 dark:border-gray-300 rounded-lg py-3 px-4 text-white dark:text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark">
+          </div>
+          <div class="mb-6">
+            <label for="message" class="block text-gray-300 dark:text-gray-600 mb-2">Message</label>
+            <textarea id="message" rows="4" class="w-full bg-[#0F172A] dark:bg-gray-100 border border-gray-600 dark:border-gray-300 rounded-lg py-3 px-4 text-white dark:text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark"></textarea>
+          </div>
+          <button type="submit" class="w-full bg-primary-light dark:bg-primary-dark hover:bg-opacity-90 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300">
+            Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-[#0F172A] dark:bg-[#1A1A1A] py-12">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+      <div>
+        <a href="#" class="flex items-center mb-6">
+          <img src="./assets/logo.png" class="h-8 mr-3" alt="Footer Logo">
+          <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">OsyRix</span>
+        </a>
+        <p class="text-gray-400 mb-4">
+          Empowering businesses with cutting-edge SaaS solutions since 2015.
+        </p>
+        <div class="flex space-x-4">
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+            <i class="fab fa-twitter text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+            <i class="fab fa-linkedin text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+            <i class="fab fa-facebook text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+            <i class="fab fa-instagram text-xl"></i>
+          </a>
+        </div>
+      </div>
+      
+      <div>
+        <h3 class="text-white font-semibold text-lg mb-4">Solutions</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Business Automation</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Data Analytics</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">AI Integration</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Cloud Solutions</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Custom Development</a></li>
+        </ul>
+      </div>
+      
+      <div>
+        <h3 class="text-white font-semibold text-lg mb-4">Company</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">About Us</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Careers</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Blog</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Press</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Partners</a></li>
+        </ul>
+      </div>
+      
+      <div>
+        <h3 class="text-white font-semibold text-lg mb-4">Resources</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Documentation</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">API Reference</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Community</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Webinars</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Help Center</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="border-t border-gray-800 pt-8 mt-8">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-400 mb-4 md:mb-0">
+          © 2023 OsyRix. All rights reserved.
+        </p>
+        <div class="flex space-x-6">
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Privacy Policy</a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Terms of Service</a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+  
+  <!-- Bottom Button Container -->
+  <div class="fixed bottom-5 left-5 right-5 flex justify-between items-end z-[9999]">
+       <!-- Theme Toggle Button -->
+<button id="theme-toggle" 
+  class="left-5 bottom-5 w-7 h-7 md:w-7 md:h-7 lg:w-11 lg:h-11 rounded-full 
+         bg-white/20 dark:bg-black/20 backdrop-blur-sm pt-1
+         hover:bg-white/70 dark:hover:bg-black/70
+         focus:bg-white/70 dark:focus:bg-black/70
+         active:bg-white/70 dark:active:bg-black/70
+         focus:outline-none focus:ring-2 focus:ring-gray-200 
+         dark:focus:ring-gray-600 text-2xl md:text-3xl font-bold
+         flex items-center justify-center shadow-lg
+         transition-all duration-300
+         opacity-70 hover:opacity-100 focus:opacity-100 active:opacity-100">
+  *
+</button>
+    
+    <!-- Chat Button -->
+<button id="chat-button"
+  class="w-10 h-10 md:w-10 md:h-10 lg:w-14 lg:h-14 rounded-full 
+         bg-darkgreen-500 hover:bg-darkgreen-600
+         focus:outline-none focus:ring-2 focus:ring-green-300 
+         text-white
+         flex items-center justify-center shadow-lg
+         transition-all duration-300"
+  onclick="window.open('https://wa.me/919909919284', '_blank')">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-7 md:w-7 lg:h-8 lg:w-8" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</button>
+  </div>
+
+  <script>
+    // Animation Script Bento Box
+    document.addEventListener('DOMContentLoaded', () => {
+      const gridItems = document.querySelectorAll('.glass-heading');
+      
+      // Animate each grid item with a slight delay between them
+      gridItems.forEach((item, index) => {
+        // Initial state (hidden)
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(20px)';
+        
+        // Animate in with delay
+        setTimeout(() => {
+          item.style.transition = 'opacity 3s ease-out, transform 3s ease-out';
+          item.style.opacity = '1';
+          item.style.transform = 'translateY(0)';
+        }, 150 * index);
+      });
+      
+      // Add intersection observer for mobile devices
+      if (window.innerWidth <= 768) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.style.opacity = '1';
+              entry.target.style.transform = 'translateY(0)';
+            }
+          });
+        }, { threshold: 0.1 });
+        
+        gridItems.forEach(item => {
+          observer.observe(item);
+        });
+      }
+    });
+
+    // Dark/Light mode toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    // Check for saved theme preference
+    if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+
+    // FAQ Accordion
+    document.querySelectorAll('.faq-question').forEach(question => {
+      question.addEventListener('click', () => {
+        const answer = question.nextElementSibling;
+        const icon = question.querySelector('i');
+        
+        // Toggle answer visibility
+        answer.classList.toggle('hidden');
+        
+        // Rotate icon
+        icon.classList.toggle('transform');
+        icon.classList.toggle('rotate-180');
+      });
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Add animation to elements when they come into view
+    const animateOnScroll = () => {
+      const elements = document.querySelectorAll('.feature-card, .testimonial-card, .pricing-card');
+      
+      elements.forEach(element => {
+        const elementPosition = element.getBoundingClientRect().top;
+        const screenPosition = window.innerHeight / 1.3;
+        
+        if (elementPosition < screenPosition) {
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }
+      });
+    };
+
+    // Set initial state for animated elements
+    document.querySelectorAll('.feature-card, .testimonial-card, .pricing-card').forEach(element => {
+      element.style.opacity = '0';
+      element.style.transform = 'translateY(20px)';
+      element.style.transition = 'all 0.6s ease-out';
+    });
+
+    // Run once on load
+    animateOnScroll();
+    
+    // Then run on scroll
+    window.addEventListener('scroll', animateOnScroll);
+  </script>
+  
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Loading</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --dark: #FEFFEA;
+      --green: #495057;
+      --blue: #3D3D3D;
+      --purple: #0F0606;
+      --animation-speed: 1s;
+    }
+    body {
+      background: var(--dark);
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      position: fixed;
+      opacity: 1;
+      transition: opacity 0.8s ease-in-out;
+    }
+    body.fade-out {
+      opacity: 0;
+    }
+    .loading-grid {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      grid-template-rows: repeat(auto-fill, minmax(80px, 1fr));
+      z-index: 1;
+      opacity: 1;
+      transition: opacity 0.8s ease-in-out;
+    }
+    .loading-grid.fade-out {
+      opacity: 0;
+    }
+    .grid-cell {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .square {
+      width: 8px;
+      height: 30px;
+      background: var(--green);
+      border-radius: 10px;
+      opacity: 0.8;
+      animation: simpleTurn var(--animation-speed) ease-in-out infinite;
+    }
+    @keyframes simpleTurn {
+      0%, 100% {
+        transform: translate(0, 0) rotate(0);
+        opacity: 0.8;
+      }
+      50% {
+        transform: translate(50%, 50%) rotate(180deg);
+        opacity: 1;
+      }
+    }
+    .content {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 1.5rem;
+      pointer-events: none;
+      gap: 0.5rem;
+      text-align: left;
+      line-height: 1;
+      background: rgba(254, 255, 234, 0.6);
+      opacity: 1;
+      transition: opacity 0.8s ease-in-out;
+    }
+    .content.fade-out {
+      opacity: 0;
+    }
+    .progress-container {
+      position: fixed;
+      bottom: 5%;
+      left: 1.5rem;
+      right: 1.5rem;
+      height: 6px;
+      background: rgba(73, 80, 87, 0.2);
+      border-radius: 3px;
+      z-index: 20;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #495057, #3D3D3D);
+      border-radius: 3px;
+      transition: width 0.3s ease-out;
+    }
+    @media (max-width: 768px) {
+      .loading-grid {
+        grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+        grid-template-rows: repeat(auto-fill, minmax(60px, 1fr));
+      }
+      :root {
+        --animation-speed: 0.8s;
+      }
+    }
+    @media (max-width: 480px) {
+      .loading-grid {
+        grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+        grid-template-rows: repeat(auto-fill, minmax(40px, 1fr));
+      }
+      :root {
+        --animation-speed: 0.6s;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="loading-grid" id="loadingGrid"></div>
+
+  <div class="content" id="content">
+    <h1 class="font-bold text-left text-[clamp(2rem,10vw,7rem)]">Loading!...</h1>
+    <h1 class="font-bold text-left text-[clamp(2rem,10vw,6rem)]">Please Wait</h1>
+    <div class="flex">
+      <h1 class="font-bold text-left text-[clamp(2rem,10vw,8rem)]">OsyRix</h1>
+      <img src="./assets/logo.png" alt="OsyRix Logo" class="w-[clamp(10px,10vw,200px)] object-contain" />
+    </div>
+    <h1 class="font-bold text-left text-[clamp(2rem,10vw,8rem)]">Technologies</h1>
+  </div>
+
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <iframe id="preloader" style="display: none;" src="homepage.html"></iframe>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const grid = document.getElementById('loadingGrid');
+      const content = document.getElementById('content');
+      const progressBar = document.getElementById('progressBar');
+      const preloader = document.getElementById('preloader');
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const cellSize = vw > 768 ? 80 : vw > 480 ? 60 : 40;
+      const cols = Math.ceil(vw / cellSize);
+      const rows = Math.ceil(vh / cellSize);
+      const fragment = document.createDocumentFragment();
+      
+      // Create grid cells
+      for (let i = 0; i < cols * rows; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'grid-cell';
+        const squareCount = Math.random() > 0.7 ? 2 : 1;
+        for (let j = 0; j < squareCount; j++) {
+          const square = document.createElement('div');
+          square.className = 'square';
+          square.style.background = `var(--${['green', 'blue', 'purple'][Math.floor(Math.random() * 3)]})`;
+          square.style.animationDelay = `${Math.random() * 0.5}s`;
+          square.style.animationDuration = `${0.5 + Math.random() * 0.5}s`;
+          cell.appendChild(square);
+        }
+        fragment.appendChild(cell);
+      }
+      grid.appendChild(fragment);
+
+      // Start preloading homepage.html
+      preloader.onload = function() {
+        // Homepage is fully loaded
+        progressBar.style.width = '100%';
+        
+        // Wait a tiny bit for the progress bar to animate
+        setTimeout(() => {
+          fadeOutAndRedirect();
+        }, 300);
+      };
+
+      // Fallback in case iframe doesn't fire onload
+      preloader.onerror = function() {
+        progressBar.style.width = '100%';
+        setTimeout(() => {
+          fadeOutAndRedirect();
+        }, 300);
+      };
+
+      // Progress bar simulation (will be overridden by actual load progress if possible)
+      let progress = 0;
+      const progressInterval = setInterval(() => {
+        // Only increase progress if we haven't reached 90%
+        // (the last 10% will come from actual load completion)
+        if (progress < 90) {
+          progress += Math.random() * 10;
+          progressBar.style.width = `${Math.min(progress, 90)}%`;
+        }
+      }, 500);
+
+      // Minimum show time (5 seconds) before allowing transition
+      const minLoadTime = 5000;
+      const startTime = Date.now();
+
+      function fadeOutAndRedirect() {
+        const elapsed = Date.now() - startTime;
+        const remainingTime = Math.max(0, minLoadTime - elapsed);
+        
+        setTimeout(() => {
+          // Stop the progress interval
+          clearInterval(progressInterval);
+          
+          // Add fade-out class to all elements
+          document.body.classList.add('fade-out');
+          grid.classList.add('fade-out');
+          content.classList.add('fade-out');
+          
+          // Wait for the transition to complete before redirecting
+          setTimeout(() => {
+            // Use replace instead of href to prevent back button issues
+            window.location.replace('homepage.html');
+          }, 800); // Match this with the CSS transition duration
+        }, remainingTime);
+      }
+
+      // Fallback: if homepage takes too long to load, transition anyway after 8 seconds
+      setTimeout(fadeOutAndRedirect, 8000);
+    });
+  </script>
+</body>
+</html>

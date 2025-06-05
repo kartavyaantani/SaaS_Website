@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="./tailwind.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us - OsyRix</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- NAVBAR JS CDN -->
+  <script src="Navbar.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            lightbg: '#0d1b2a',
+            darkbg: '#FEFFEA',
+            darkgreen: {
+              500: '#1B5E20',
+              600: '#0D4D14'
+            },
+            primary: {
+              light: '#3b82f6',
+              dark: '#2563eb'
+            },
+            secondary: {
+              light: '#10b981',
+              dark: '#059669'
+            }
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'float-reverse': 'float-reverse 5s ease-in-out infinite',
+            'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'bounce-slow': 'bounce 3s ease-in-out infinite'
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-20px)' }
+            },
+            'float-reverse': {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(20px)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    canvas {
+      display: block;
+    }
+
+    .glass-heading {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .dark .glass-heading {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .dark .glass-card {
+      background: rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    @media (hover: none) {
+      .glass-heading {
+        background: rgba(255, 255, 255, 0.7);
+      }
+      .dark .glass-heading {
+        background: rgba(0, 0, 0, 0.7);
+      }
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .form-field:hover .form-icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    input:focus, textarea:focus {
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    }
+
+    .gradient-text {
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    
+    .gradient-bg {
+      background-size: 200% 200%;
+      animation: gradient 15s ease infinite;
+    }
+
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .input-field {
+      transition: all 0.3s ease;
+    }
+
+    .input-field:focus {
+      transform: scale(1.01);
+    }
+
+    .form-success-message {
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.5s ease;
+    }
+
+    .form-success-message.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+    .moving-background {
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+    }
+    
+    @keyframes gradientBG {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    
+    .svg-icon-animate path {
+      transition: all 0.5s ease;
+    }
+    
+    .svg-icon-animate:hover path {
+      d: path("M1 1 L20 20 L1 20 Z");
+    }
+  </style>
+</head>
+<body class="bg-lightbg dark:bg-darkbg custom-cursor h-full m-0 p-0">
+
+ <!-- Navbar -->
+  <nav class="bg-white border-gray-200 dark:bg-[#0F0606] dark:border-gray-700 rounded-3xl">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <img src="./assets/logo.png" class="h-8" alt="Main Logo" />
+        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">OsyRix</span>
+      </a>
+      <button data-collapse-toggle="navbar-multi-level" type="button" class="custom-cursor inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-multi-level" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+        </svg>
+      </button>
+      <div class="hidden w-full md:block md:w-auto " id="navbar-multi-level">
+        <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-[#0F0606] md:dark:bg-[#0F0606] dark:border-gray-700">
+          <li>
+            <a href="./homepage.html" class="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-[#0F0606]" aria-current="page">Home</a>
+          </li>
+          <li>
+            <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="custom-cursor flex items-center justify-between w-full py-2 px-3 text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:hover:bg-gray-700 md:dark:hover:bg-transparent ">More <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+            </svg></button>
+            <!-- Dropdown menu -->
+            <div id="dropdownNavbar" class="custom-cursor z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600 ">
+              <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownLargeButton">
+                <li>
+                  <a href="./projects.html" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Projects</a>
+                </li>
+                <li aria-labelledby="dropdownNavbarLink">
+                  <button id="doubleDropdownButton" data-dropdown-toggle="doubleDropdown" data-dropdown-placement="right-start" type="button" class="custom-cursor flex items-center justify-between w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Company<svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                  </svg></button>
+                  <div id="doubleDropdown" class="custom-cursor z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700">
+                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="doubleDropdownButton">
+                      <li>
+                        <a href="./technologies.html" class="custom-cursor block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Technologies</a>
+                      </li>
+                      <li>
+                        <a href="./billing.html" class="custom-cursor block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Billing</a>
+                      </li>
+                      <li>
+                        <a href="./team.html" class="custom-cursor block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Our Team</a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+              <div class="py-1">
+                <a href="./about-us.html" class="custom-cursor block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">About Us</a>
+              </div>
+            </div>
+          </li>
+          <li>
+            <a href="./services.html" class="custom-cursor block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Services</a>
+          </li>
+          <li>
+            <a href="./pricing.html" class="custom-cursor block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Pricing</a>
+          </li>
+          <li>
+            <a href="./contact.html" class="custom-cursor block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</a>
+          </li>
+          <li>
+            <a href="https://github.com/kartavyaantani" class="custom-cursor ml-4 bg-primary-light dark:bg-primary-dark text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-all duration-300">Get Started</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- Hero Section with Background Animation -->
+  <section class="relative overflow-hidden py-16 md:py-28">
+    <div class="absolute inset-0 z-0 moving-background bg-gradient-to-br from-[#0d1b2a] via-[#1B263B] to-[#415A77] dark:from-[#FEFFEA] dark:via-[#E0DFD5] dark:to-[#D3D5D4]">
+      <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 dark:opacity-5"></div>
+    </div>
+    
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="flex flex-col items-center justify-center text-center">
+        <h1 class="text-4xl md:text-6xl font-bold text-white dark:text-gray-900 mb-6 leading-tight">
+          Get in <span class="gradient-text bg-gradient-to-r from-primary-light to-secondary-light dark:from-primary-dark dark:to-secondary-dark">Touch</span>
+        </h1>
+        <p class="text-xl text-gray-300 dark:text-gray-700 mb-8 max-w-3xl mx-auto">
+          Our team is here to help you with any questions, concerns, or inquiries about our services. 
+          We'd love to hear from you!
+        </p>
+        <div class="animate-bounce-slow">
+          <svg class="w-8 h-8 text-white dark:text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Form Section -->
+  <section class="py-16 bg-[#0F172A] dark:bg-[#F5F5F5] relative overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <div class="absolute inset-0 opacity-30 dark:opacity-10 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+    </div>
+    
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="max-w-5xl mx-auto glass-card rounded-2xl p-8 md:p-12 shadow-xl overflow-hidden relative">
+        <div class="absolute top-0 right-0 -mt-16 -mr-16 w-64 h-64 bg-primary-light dark:bg-primary-dark rounded-full opacity-20 filter blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 -mb-16 -ml-16 w-64 h-64 bg-secondary-light dark:bg-secondary-dark rounded-full opacity-20 filter blur-3xl"></div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div class="lg:pr-8">
+            <h2 class="text-3xl font-bold text-white dark:text-gray-900 mb-6">Contact Information</h2>
+            <p class="text-gray-300 dark:text-gray-600 mb-8">
+              Fill out the form and our team will get back to you within 24 hours.
+            </p>
+            
+            <div class="space-y-8">
+              <div class="flex items-start">
+                <div class="flex-shrink-0 bg-gradient-to-r from-primary-light to-secondary-light dark:from-primary-dark dark:to-secondary-dark text-white p-3 rounded-lg mr-4 transition-all duration-300 hover:scale-110">
+                  <i class="fas fa-map-marker-alt text-lg"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-white dark:text-gray-900 mb-1">Our Headquarters</h4>
+                  <p class="text-gray-300 dark:text-gray-600">123 Tech Park, Silicon Valley, CA 94025</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <div class="flex-shrink-0 bg-gradient-to-r from-primary-light to-secondary-light dark:from-primary-dark dark:to-secondary-dark text-white p-3 rounded-lg mr-4 transition-all duration-300 hover:scale-110">
+                  <i class="fas fa-envelope text-lg"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-white dark:text-gray-900 mb-1">Email Address</h4>
+                  <p class="text-gray-300 dark:text-gray-600">info@OsyRixtech.com</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <div class="flex-shrink-0 bg-gradient-to-r from-primary-light to-secondary-light dark:from-primary-dark dark:to-secondary-dark text-white p-3 rounded-lg mr-4 transition-all duration-300 hover:scale-110">
+                  <i class="fas fa-phone-alt text-lg"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-white dark:text-gray-900 mb-1">Phone Number</h4>
+                  <p class="text-gray-300 dark:text-gray-600">+1 (555) 123-4567</p>
+                </div>
+              </div>
+
+              <div class="flex items-start">
+                <div class="flex-shrink-0 bg-gradient-to-r from-primary-light to-secondary-light dark:from-primary-dark dark:to-secondary-dark text-white p-3 rounded-lg mr-4 transition-all duration-300 hover:scale-110">
+                  <i class="fas fa-clock text-lg"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-white dark:text-gray-900 mb-1">Business Hours</h4>
+                  <p class="text-gray-300 dark:text-gray-600">Mon - Fri: 9:00 AM - 5:00 PM PST</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-12">
+              <h4 class="font-bold text-white dark:text-gray-900 mb-4">Follow Us</h4>
+              <div class="flex space-x-4">
+                <a href="#" class="bg-white/10 dark:bg-black/10 hover:bg-white/20 dark:hover:bg-black/20 text-white dark:text-gray-900 p-3 rounded-full transition-all duration-300 hover:scale-110">
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="bg-white/10 dark:bg-black/10 hover:bg-white/20 dark:hover:bg-black/20 text-white dark:text-gray-900 p-3 rounded-full transition-all duration-300 hover:scale-110">
+                  <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="#" class="bg-white/10 dark:bg-black/10 hover:bg-white/20 dark:hover:bg-black/20 text-white dark:text-gray-900 p-3 rounded-full transition-all duration-300 hover:scale-110">
+                  <i class="fab fa-facebook"></i>
+                </a>
+                <a href="#" class="bg-white/10 dark:bg-black/10 hover:bg-white/20 dark:hover:bg-black/20 text-white dark:text-gray-900 p-3 rounded-full transition-all duration-300 hover:scale-110">
+                  <i class="fab fa-instagram"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <form id="contactForm" class="space-y-6">
+              <div class="form-field">
+                <label for="fullName" class="block text-white dark:text-gray-900 mb-2 font-medium">Full Name <span class="text-red-500">*</span></label>
+                <div class="relative">
+                  <div class="form-icon absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none transition-all duration-300">
+                    <i class="fas fa-user text-gray-400"></i>
+                  </div>
+                  <input 
+                    type="text" 
+                    id="fullName" 
+                    name="fullName" 
+                    class="input-field w-full bg-white/5 dark:bg-black/5 border border-gray-600 dark:border-gray-300 rounded-lg py-3 px-4 pl-10 text-white dark:text-gray-900 focus:outline-none focus:border-primary-light dark:focus:border-primary-dark"
+                    placeholder="John Doe"
+                    required
+                  >
+                  <div class="error-message hidden text-red-500 text-sm mt-1"></div>
+                </div>
+              </div>
+              
+              <div class="form-field">
+                <label for="email" class="block text-white dark:text-gray-900 mb-2 font-medium">Email <span class="text-red-500">*</span></label>
+                <div class="relative">
+                  <div class="form-icon absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none transition-all duration-300">
+                    <i class="fas fa-envelope text-gray-400"></i>
+                  </div>
+                  <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    class="input-field w-full bg-white/5 dark:bg-black/5 border border-gray-600 dark:border-gray-300 rounded-lg py-3 px-4 pl-10 text-white dark:text-gray-900 focus:outline-none focus:border-primary-light dark:focus:border-primary-dark"
+                    placeholder="john.doe@example.com"
+                    required
+                  >
+                  <div class="error-message hidden text-red-500 text-sm mt-1"></div>
+                </div>
+              </div>
+              
+              <div class="form-field">
+                <label for="phone" class="block text-white dark:text-gray-900 mb-2 font-medium">Phone Number</label>
+                <div class="relative">
+                  <div class="form-icon absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none transition-all duration-300">
+                    <i class="fas fa-phone text-gray-400"></i>
+                  </div>
+                  <input 
+                    type="tel" 
+                    id="phone" 
+                    name="phone" 
+                    class="input-field w-full bg-white/5 dark:bg-black/5 border border-gray-600 dark:border-gray-300 rounded-lg py-3 px-4 pl-10 text-white dark:text-gray-900 focus:outline-none focus:border-primary-light dark:focus:border-primary-dark"
+                    placeholder="(555) 123-4567"
+                  >
+                  <div class="error-message hidden text-red-500 text-sm mt-1"></div>
+                </div>
+              </div>
+              
+              <div class="form-field">
+                <label for="subject" class="block text-white dark:text-gray-900 mb-2 font-medium">Subject <span class="text-red-500">*</span></label>
+                <div class="relative">
+                  <div class="form-icon absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none transition-all duration-300">
+                    <i class="fas fa-tag text-gray-400"></i>
+                  </div>
+                  <input 
+                    type="text" 
+                    id="subject" 
+                    name="subject" 
+                    class="input-field w-full bg-white/5 dark:bg-black/5 border border-gray-600 dark:border-gray-300 rounded-lg py-3 px-4 pl-10 text-white dark:text-gray-900 focus:outline-none focus:border-primary-light dark:focus:border-primary-dark"
+                    placeholder="Inquiry about your services"
+                    required
+                  >
+                  <div class="error-message hidden text-red-500 text-sm mt-1"></div>
+                </div>
+              </div>
+              
+              <div class="form-field">
+                <label for="message" class="block text-white dark:text-gray-900 mb-2 font-medium">Message <span class="text-red-500">*</span></label>
+                <div class="relative">
+                  <div class="form-icon absolute top-3 left-0 pl-3 flex items-start pointer-events-none transition-all duration-300">
+                    <i class="fas fa-comment text-gray-400"></i>
+                  </div>
+                  <textarea 
+                    id="message" 
+                    name="message" 
+                    rows="5" 
+                    class="input-field w-full bg-white/5 dark:bg-black/5 border border-gray-600 dark:border-gray-300 rounded-lg py-3 px-4 pl-10 text-white dark:text-gray-900 focus:outline-none focus:border-primary-light dark:focus:border-primary-dark"
+                    placeholder="Please describe your inquiry in detail..."
+                    required
+                  ></textarea>
+                  <div class="error-message hidden text-red-500 text-sm mt-1"></div>
+                </div>
+              </div>
+              
+              <div class="form-field">
+                <label class="flex items-center text-white dark:text-gray-900">
+                  <input 
+                    type="checkbox" 
+                    name="terms" 
+                    class="form-checkbox h-5 w-5 text-primary-light dark:text-primary-dark rounded focus:ring-primary-light dark:focus:ring-primary-dark"
+                    required
+                  >
+                  <span class="ml-2">I agree to the <a href="#" class="text-primary-light dark:text-primary-dark hover:underline">Terms & Conditions</a> <span class="text-red-500">*</span></span>
+                </label>
+                <div class="error-message hidden text-red-500 text-sm mt-1"></div>
+              </div>
+              
+              <div>
+                <button 
+                  type="submit" 
+                  class="w-full bg-gradient-to-r from-primary-light to-secondary-light dark:from-primary-dark dark:to-secondary-dark hover:opacity-90 text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-[1.01]"
+                >
+                  Send Message
+                </button>
+              </div>
+            </form>
+
+            <div id="formSuccess" class="form-success-message mt-6 bg-green-500/20 border border-green-500 text-green-500 dark:text-green-600 p-4 rounded-lg text-center hidden">
+              <div class="flex items-center justify-center">
+                <i class="fas fa-check-circle text-2xl mr-2"></i>
+                <p class="font-medium">Your message has been sent successfully! We'll get back to you soon.</p>
+              </div>
+            </div>
+
+            <div id="formError" class="form-success-message mt-6 bg-red-500/20 border border-red-500 text-red-500 p-4 rounded-lg text-center hidden">
+              <div class="flex items-center justify-center">
+                <i class="fas fa-exclamation-circle text-2xl mr-2"></i>
+                <p class="font-medium">Oops! Something went wrong. Please try again later.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map Section -->
+  <section class="py-16 bg-[#1B263B] dark:bg-[#E0E1DD] relative overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <div class="absolute inset-0 opacity-30 dark:opacity-10 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+    </div>
+    
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-white dark:text-gray-900 mb-4">Our Location</h2>
+        <p class="text-xl text-gray-300 dark:text-gray-600 max-w-3xl mx-auto">
+          Find us at our headquarters in Silicon Valley
+        </p>
+      </div>
+      
+      <div class="max-w-5xl mx-auto glass-card rounded-2xl p-4 shadow-xl overflow-hidden transform transition-all duration-500 hover:shadow-2xl">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d202844.36098690695!2d-122.27005931255136!3d37.40296762069328!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fb68ad0cfc739%3A0x7eb356b66bd4b50e!2sSilicon%20Valley%2C%20CA%2C%20USA!5e0!3m2!1sen!2sin!4v1654532598854!5m2!1sen!2sin" 
+          width="100%" 
+          height="450" 
+          style="border:0;" 
+          allowfullscreen="" 
+          loading="lazy" 
+          class="rounded-xl"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-16 bg-[#0F172A] dark:bg-[#F5F5F5] relative overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <div class="absolute inset-0 opacity-30 dark:opacity-10 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+    </div>
+    
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-white dark:text-gray-900 mb-4">Frequently Asked Questions</h2>
+        <p class="text-xl text-gray-300 dark:text-gray-600 max-w-3xl mx-auto">
+          Find quick answers to common questions about contacting us
+        </p>
+      </div>
+      
+      <div class="max-w-3xl mx-auto">
+        <!-- FAQ Item 1 -->
+        <div class="mb-4 border-b border-gray-700 dark:border-gray-300 pb-4">
+          <button class="faq-question flex justify-between items-center w-full text-left text-white dark:text-gray-900 font-semibold py-2 focus:outline-none">
+            <span>How quickly will someone respond to my inquiry?</span>
+            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+          </button>
+          <div class="faq-answer mt-2 text-gray-300 dark:text-gray-600 hidden">
+            We strive to respond to all inquiries within 24 business hours. For urgent matters, we recommend calling our support line directly.
+          </div>
+        </div>
+
+        <!-- FAQ Item 2 -->
+        <div class="mb-4 border-b border-gray-700 dark:border-gray-300 pb-4">
+          <button class="faq-question flex justify-between items-center w-full text-left text-white dark:text-gray-900 font-semibold py-2 focus:outline-none">
+            <span>Do you offer technical support 24/7?</span>
+            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+          </button>
+          <div class="faq-answer mt-2 text-gray-300 dark:text-gray-600 hidden">
+            Yes, our Enterprise and Professional plan clients have access to 24/7 technical support. Starter plan clients have support during regular business hours (9 AM - 5 PM PST, Monday through Friday).
+          </div>
+        </div>
+
+        <!-- FAQ Item 3 -->
+        <div class="mb-4 border-b border-gray-700 dark:border-gray-300 pb-4">
+          <button class="faq-question flex justify-between items-center w-full text-left text-white dark:text-gray-900 font-semibold py-2 focus:outline-none">
+            <span>Can I schedule a demo before purchasing?</span>
+            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+          </button>
+          <div class="faq-answer mt-2 text-gray-300 dark:text-gray-600 hidden">
+            Absolutely! We encourage potential clients to see OsyRix in action before making a decision. You can schedule a personalized demo through our contact form by selecting "Request Demo" as the subject.
+          </div>
+        </div>
+
+        <!-- FAQ Item 4 -->
+        <div class="mb-4 border-b border-gray-700 dark:border-gray-300 pb-4">
+          <button class="faq-question flex justify-between items-center w-full text-left text-white dark:text-gray-900 font-semibold py-2 focus:outline-none">
+            <span>Do you have offices outside of the United States?</span>
+            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+          </button>
+          <div class="faq-answer mt-2 text-gray-300 dark:text-gray-600 hidden">
+            Yes, we have satellite offices in London, Singapore, and Sydney to better serve our international clients. Contact information for these offices can be provided upon request.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Light/Dark Mode Toggle Button -->
+  <div class="fixed bottom-4 right-4 z-50">
+    <button id="theme-toggle" class="bg-[#1B263B] dark:bg-white text-white dark:text-gray-900 rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none">
+      <svg id="theme-toggle-dark-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+      </svg>
+      <svg id="theme-toggle-light-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-[#0F172A] dark:bg-[#1A1A1A] py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+        <div>
+          <a href="#" class="flex items-center mb-6">
+            <img src="./assets/logo.png" class="h-8 mr-3" alt="Footer Logo">
+            <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">OsyRix</span>
+          </a>
+          <p class="text-gray-400 mb-4">
+            Empowering businesses with cutting-edge SaaS solutions since 2015.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+              <i class="fab fa-twitter text-xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+              <i class="fab fa-linkedin text-xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+              <i class="fab fa-facebook text-xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+              <i class="fab fa-instagram text-xl"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-white font-semibold text-lg mb-4">Solutions</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Business Automation</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Data Analytics</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">AI Integration</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Cloud Solutions</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Custom Development</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-white font-semibold text-lg mb-4">Company</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">About Us</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Careers</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Blog</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Press</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Partners</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-white font-semibold text-lg mb-4">Resources</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Documentation</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Tutorials</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Case Studies</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">FAQs</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-700 pt-8 mt-8 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-400 text-center md:text-left mb-4 md:mb-0">
+          &copy; 2025 OsyRix Technologies. All rights reserved.
+        </p>
+        <div class="flex flex-wrap justify-center space-x-6">
+          <a href="#" class="text-gray-400 hover:text-white mb-2 md:mb-0 transition-colors duration-300">Privacy Policy</a>
+          <a href="#" class="text-gray-400 hover:text-white mb-2 md:mb-0 transition-colors duration-300">Terms of Service</a>
+          <a href="#" class="text-gray-400 hover:text-white mb-2 md:mb-0 transition-colors duration-300">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Form Validation & Light/Dark Mode Script -->
+  <script>
+    // Light/Dark Mode Toggle
+    document.addEventListener('DOMContentLoaded', function() {
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+      const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+      // Check initial theme
+      if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+        themeToggleLightIcon.classList.remove('hidden');
+      } else {
+        document.documentElement.classList.remove('dark');
+        themeToggleDarkIcon.classList.remove('hidden');
+      }
+
+      // Toggle theme on button click
+      themeToggleBtn.addEventListener('click', function() {
+        // Toggle icons
+        themeToggleDarkIcon.classList.toggle('hidden');
+        themeToggleLightIcon.classList.toggle('hidden');
+
+        // Toggle theme
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('color-theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('color-theme', 'dark');
+        }
+      });
+      
+      // FAQ accordion
+      const faqQuestions = document.querySelectorAll('.faq-question');
+      faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+          const answer = question.nextElementSibling;
+          const icon = question.querySelector('i');
+          
+          // Toggle current FAQ item
+          answer.classList.toggle('hidden');
+          icon.classList.toggle('rotate-180');
+          
+          // Close other FAQs
+          faqQuestions.forEach(otherQuestion => {
+            if (otherQuestion !== question) {
+              const otherAnswer = otherQuestion.nextElementSibling;
+              const otherIcon = otherQuestion.querySelector('i');
+              
+              otherAnswer.classList.add('hidden');
+              otherIcon.classList.remove('rotate-180');
+            }
+          });
+        });
+      });
+
+      // Form validation and submission
+      const contactForm = document.getElementById('contactForm');
+      const formSuccess = document.getElementById('formSuccess');
+      const formError = document.getElementById('formError');
+      
+      contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Reset any previous error messages
+        document.querySelectorAll('.error-message').forEach(msg => {
+          msg.textContent = '';
+          msg.classList.add('hidden');
+        });
+        
+        let isValid = true;
+        
+        // Validate Name
+        const nameField = document.getElementById('fullName');
+        if (!nameField.value.trim()) {
+          showError(nameField, 'Name is required');
+          isValid = false;
+        } else if (nameField.value.trim().length < 2) {
+          showError(nameField, 'Name must be at least 2 characters');
+          isValid = false;
+        }
+        
+        // Validate Email
+        const emailField = document.getElementById('email');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailField.value.trim()) {
+          showError(emailField, 'Email is required');
+          isValid = false;
+        } else if (!emailRegex.test(emailField.value.trim())) {
+          showError(emailField, 'Please enter a valid email address');
+          isValid = false;
+        }
+        
+        // Validate Phone (optional)
+        const phoneField = document.getElementById('phone');
+        if (phoneField.value.trim()) {
+          const phoneRegex = /^[\d\s\-\(\)]+$/;
+          if (!phoneRegex.test(phoneField.value.trim())) {
+            showError(phoneField, 'Please enter a valid phone number');
+            isValid = false;
+          }
+        }
+        
+        // Validate Subject
+        const subjectField = document.getElementById('subject');
+        if (!subjectField.value.trim()) {
+          showError(subjectField, 'Subject is required');
+          isValid = false;
+        }
+        
+        // Validate Message
+        const messageField = document.getElementById('message');
+        if (!messageField.value.trim()) {
+          showError(messageField, 'Message is required');
+          isValid = false;
+        } else if (messageField.value.trim().length < 10) {
+          showError(messageField, 'Message must be at least 10 characters');
+          isValid = false;
+        }
+        
+        // Validate Terms
+        const termsField = document.querySelector('input[name="terms"]');
+        if (!termsField.checked) {
+          showError(termsField, 'You must agree to the terms and conditions');
+          isValid = false;
+        }
+        
+        // If form is valid, simulate form submission
+        if (isValid) {
+          // Hide form and show success message
+          contactForm.reset();
+          formSuccess.classList.remove('hidden');
+          formSuccess.classList.add('show');
+          
+          // Scroll to success message
+          setTimeout(() => {
+            formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 100);
+          
+          // Hide success message after 5 seconds
+          setTimeout(() => {
+            formSuccess.classList.remove('show');
+            setTimeout(() => {
+              formSuccess.classList.add('hidden');
+            }, 500);
+          }, 5000);
+        }
+      });
+      
+      // Helper function to show error messages
+      function showError(field, message) {
+        const errorElement = field.parentElement.querySelector('.error-message');
+        errorElement.textContent = message;
+        errorElement.classList.remove('hidden');
+        
+        // Add shake animation
+        field.classList.add('border-red-500');
+        field.animate([
+          { transform: 'translateX(0)' },
+          { transform: 'translateX(-5px)' },
+          { transform: 'translateX(5px)' },
+          { transform: 'translateX(-5px)' },
+          { transform: 'translateX(0)' }
+        ], {
+          duration: 300,
+          iterations: 1
+        });
+        
+        setTimeout(() => {
+          field.classList.remove('border-red-500');
+        }, 2000);
+      }
+      
+      // Add visual effects for form fields
+      document.querySelectorAll('.input-field').forEach(input => {
+        input.addEventListener('focus', () => {
+          const icon = input.parentElement.querySelector('.form-icon i');
+          if (icon) icon.classList.add('text-primary-light', 'dark:text-primary-dark');
+          icon.classList.remove('text-gray-400');
+        });
+        
+        input.addEventListener('blur', () => {
+          const icon = input.parentElement.querySelector('.form-icon i');
+          if (icon) icon.classList.remove('text-primary-light', 'dark:text-primary-dark');
+          icon.classList.add('text-gray-400');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
